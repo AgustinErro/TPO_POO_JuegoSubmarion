@@ -110,10 +110,10 @@ public class JuegoSubmarino {
 	public boolean terminarJuego() {
 		if (submarino.getVidas() < 0) {
 			System.out.println("Se termina el juego");
-			return false;
+			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 		
