@@ -26,29 +26,29 @@ public class Controlador {
 	
 	//----------MOVIMINETO SUBMARINO------------------------------------------------------------------------
 	public void moverDerechaSubmarino() {
-		if (juego.terminarJuego())
+		if (!juego.terminarJuego())
 			juego.moverDerecha();
 	}
 	
 	public void moverIzquierdaSubmarino() {
-		if (juego.terminarJuego())
+		if (!juego.terminarJuego())
 			juego.moverIzquierda();
 	}
 	
 	public void moverArribaSubmarino() {
-		if (juego.terminarJuego())
+		if (!juego.terminarJuego())
 			juego.moverArriba();
 	}
 	
 	public void moverAbajoSubmarino() {
-		if (juego.terminarJuego())
+		if (!juego.terminarJuego())
 			juego.moverAbajo();
 	}
 	
 	//----------PROCESOS EN LOOP------------------------------------------------------------------------
 	//TODO
 	 public void procesosAutomaticos() {
-		 if (juego.terminarJuego()) {
+		 if (!juego.terminarJuego()) {
 			juego.moverEntidadesAutomaticas();
 		 	juego.sincronizarSubmarino();
 		 	juego.sincronizarNivel();
