@@ -15,7 +15,7 @@ public class Submarino extends EntidadMovible implements movimientoHorizontal {
 		super(areaJuego, ancho, alto, velocidad);
 		this.setPosInicial();
 		this.salud = 100;
-		this.vidas = 3;
+		this.vidas = 0;
 		this.velocidad = velocidad;
 		this.areaEntidad = new Area(ancho, alto);
 		this.areaJuego = areaJuego;
