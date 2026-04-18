@@ -12,7 +12,7 @@ public class Controlador {
 	
 	
 	
-	protected Controlador() {
+	public Controlador() {
 		super();
 		this.juego = new JuegoSubmarino();
 	}
