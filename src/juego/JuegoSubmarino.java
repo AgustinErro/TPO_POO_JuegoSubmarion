@@ -11,7 +11,9 @@ public class JuegoSubmarino {
 
 	private int nivel;
 	private ArrayList<Barco> barcos;
-
+	private ArrayList<Barco> barcosPantalla;
+	private int barcosLimite = 3;
+	
 	private Submarino submarino;
 	private Area areaJuego;
 	private int puntos;
@@ -33,7 +35,7 @@ public class JuegoSubmarino {
 		
 		//-----CREADOR DE BARCOS---------
 		this.barcos = new ArrayList<Barco>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 12; i++) {
 			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel); 
 			this.barcos.add(nuevoBarco);
 		}
@@ -58,9 +60,10 @@ public class JuegoSubmarino {
 	
 	//------------METODOS EN LOOP------------
 	public void moverEntidadesAutomaticas() {
+		this.actualizarBarcosPantalla();
 		for (int i = 0; i < barcos.size(); i++) {
-			this.barcos.get(i).moverBarco();
-			this.barcos.get(i).moverCargas();			
+			this.barcosPantalla.get(i).moverBarco();
+			this.barcosPantalla.get(i).moverCargas();			
 		}
 	}
 	
@@ -86,16 +89,20 @@ public class JuegoSubmarino {
 	
 	public void sincronizarNivel() {
 		
-		if(barcos.isEmpty()&& (puntos != 0)) {
+		if(barcos.isEmpty()&& (puntos != 0) && barcosPantalla.isEmpty()) {
 			this.pasarNivel();
 		}
 		else {
-			for (int i = barcos.size() - 1; i >= 0; i--) {
-				if (barcos.get(i).isInactivo()) {
+			for (int i = barcosPantalla.size() - 1; i >= 0; i--) {
+				if (barcosPantalla.get(i).isInactivo()) {
 					barcos.remove(i);
 				}
 			}
 		}
+	}
+	
+	private void actualizarBarcosPantalla() {
+		
 	}
 	
 	//-----------GESTIONAR NIVEL----------
@@ -103,7 +110,7 @@ public class JuegoSubmarino {
 		this.nivel +=1;
 		this.puntos +=200;
 		velocidadBarco = ((int)(velocidadBarco * 1.2) <= 20 ) ? (int)(velocidadBarco * 1.2) : 20;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 12; i++) {
 			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel);
 			this.barcos.add(nuevoBarco);
 		}
