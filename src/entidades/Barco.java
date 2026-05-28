@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.Random;
 
+import auxiliares.Area;
 import auxiliares.Direccion;
 import interfaces.moviminetoHorizontal;
 
@@ -9,6 +10,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	
 	private boolean activo;
 	private CargaProfundidad cargaDisparada;
+	private Area areaBarco;
 
 	
 	public Barco(double nivel, int posMax) {
