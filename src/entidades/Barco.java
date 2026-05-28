@@ -8,7 +8,6 @@ import interfaces.moviminetoHorizontal;
 public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	
 	private boolean activo;
-	private boolean cargaPendiente;
 	private CargaProfundidad cargaDisparada;
 
 	
