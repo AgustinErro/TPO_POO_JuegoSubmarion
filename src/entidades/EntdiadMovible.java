@@ -5,19 +5,21 @@ import auxiliares.Direccion;
 
 public abstract class EntdiadMovible {
 	
-	protected Area area;
+	protected Area areaEntidad,areaJuego;
 	protected int posX, posY;
-	protected double velocidad;
+	protected int velocidad;
 	protected Direccion direccion;
+	protected int nivel;
 	
 	
 	
 	
 	
-	protected EntdiadMovible() {
+	public EntdiadMovible(Area areaEntidad, Area areaJuego, int posX, int posY, double velocidad, int nivel) {
 		super();
+		this.areaEntidad = areaEntidad;
+		this.areaJuego = areaJuego;
 	}
-
 
 
 	protected abstract void limitesDeMovimiento();
@@ -48,7 +50,7 @@ public abstract class EntdiadMovible {
 
 
 
-	protected void setVelocidad(double velocidad) {
+	protected void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
 

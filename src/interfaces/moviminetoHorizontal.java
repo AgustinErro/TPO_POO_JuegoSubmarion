@@ -2,8 +2,8 @@ package interfaces;
 
 public interface moviminetoHorizontal {
 	
-	public void moverDerecha();
+	public int moverDerecha();
 	
-	public void moverIzquierda();
+	public int moverIzquierda();
 
 }

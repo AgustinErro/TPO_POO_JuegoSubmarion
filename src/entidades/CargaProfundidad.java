@@ -1,17 +1,19 @@
 package entidades;
 
+import auxiliares.Area;
 import auxiliares.Direccion;
 
 public class CargaProfundidad extends EntdiadMovible{
 	
 	
 	private boolean exploto;
-
-	protected CargaProfundidad(int posX, int posY, double velocidad) {
-		super ();
-		// TODO Auto-generated constructor stub
-	}
 	
+	
+
+	public CargaProfundidad(Area areaEntidad, Area areaJuego, int posX, int posY, double velocidad, int nivel) {
+		super(areaEntidad, areaJuego, posX, posY, velocidad, nivel);
+	}
+
 
 	@Override
 	protected void limitesDeMovimiento() {

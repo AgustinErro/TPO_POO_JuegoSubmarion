@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import auxiliares.Area;
@@ -8,25 +9,25 @@ import interfaces.moviminetoHorizontal;
 
 public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	
-	private boolean activo;
-	private CargaProfundidad cargaDisparada;
-	private Area areaBarco;
+	private ArrayList<CargaProfundidad> cargasDisparadas;
+	private int rebotes;
 
 	
-	public Barco(double nivel, int posMax) {
-		super();
+	
+	
+	
+	
+	public Barco(Area areaEntidad, Area areaJuego, int posX, int posY, double velocidad, int nivel) {
+		super(areaEntidad, areaJuego, posX, posY, velocidad, nivel);
 		
 		Random random = new Random();
 		
-		this.velocidad = (10 + 0.2 * nivel);	
+		
+		this.velocidad = (10 + 2 * nivel);	
 		this.direccion = random.nextBoolean() ? Direccion.DERECHA : Direccion.IZQUIERDA;
-		this.posX = (this.direccion == Direccion.DERECHA) ? 0 : posMax;
-		
-		
-		
-		
-		// TODO Auto-generated constructor stub
+		this.posX = (this.direccion == Direccion.DERECHA) ? 0 : areaJuego.getAncho();
 	}
+
 
 	public void dispararCarga() {
 		
@@ -39,15 +40,21 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	}
 
 	@Override
-	public void moverDerecha() {
-		// TODO Auto-generated method stub
+	public int moverDerecha() {
+		int nuevaX = this.posX + this.velocidad;
+        if (areaJuego.estaDentroHorizontal(nuevaX, this.areaEntidad.getAncho())) {
+            this.posX = nuevaX;
+        }
+        else
+        	velocidad *= -1;
+        return posX;
 		
 	}
 
 	@Override
-	public void moverIzquierda() {
+	public int moverIzquierda() {
 		// TODO Auto-generated method stub
-		
+		return posX;
 	}
 
 }
