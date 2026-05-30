@@ -11,6 +11,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	
 	private ArrayList<CargaProfundidad> cargasDisparadas;
 	private int rebotes;
+	private boolean direccion;
 
 	
 	
@@ -20,14 +21,22 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	public Barco(Area areaJuego, int nivel) {
 		super(areaJuego, nivel);
 		this.areaEntidad = new Area(90,30);
-		
+		this.velocidad = (10 + 2* nivel); 
 		Random random = new Random();	
-		this.velocidad = (10 + 2* nivel) * (random.nextBoolean() ? 1 : -1);
-		this.posX = (this.velocidad >= 0) ? 0 : areaJuego.getAncho();
+		this.direccion = random.nextBoolean();
+		this.posX = ((this.velocidad == 0) ? 0 : areaJuego.getAncho()-100);
 	}
 
 
 	//----------Movimiento Barco-----------------------------
+	
+	public int moverBarco() {
+		if (this.direccion)
+			return this.moverDerecha();
+		else
+			return this.moverIzquierda();
+	}
+	
 	@Override
 	public int moverDerecha() {
 		int nuevaX = this.posX + this.velocidad;
@@ -54,7 +63,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	//---------------------------------------------------------
 
 	public void dispararCarga() {
-		
+		System.out.println("Disparo desde X = " + this.posX);
 	}
 	
 
