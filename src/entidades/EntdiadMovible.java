@@ -8,23 +8,17 @@ public abstract class EntdiadMovible {
 	protected Area areaEntidad,areaJuego;
 	protected int posX, posY;
 	protected int velocidad;
-	protected Direccion direccion;
 	protected int nivel;
 	
 	
 	
 	
 	
-	public EntdiadMovible(Area areaEntidad, Area areaJuego, int posX, int posY, double velocidad, int nivel) {
+	public EntdiadMovible(Area areaJuego, int nivel) {
 		super();
 		this.areaEntidad = areaEntidad;
 		this.areaJuego = areaJuego;
 	}
-
-
-	protected abstract void limitesDeMovimiento();
-
-
 
 	protected int getPosX() {
 		return posX;
@@ -53,17 +47,5 @@ public abstract class EntdiadMovible {
 	protected void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
-
-
-
-	protected void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
-	}
-	
-	
-
-	
-	
-	
 
 }

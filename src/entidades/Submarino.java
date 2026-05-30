@@ -5,28 +5,51 @@ import interfaces.moviminetoHorizontal;
 
 public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 
+	private int vidas;
+	private int salud;
 	
-	
-	public Submarino(Area areaEntidad, Area areaJuego, int posX, int posY, double velocidad, int nivel) {
-		super(areaEntidad, areaJuego, posX, posY, velocidad, nivel);
-	}
-
-	@Override
-	protected void limitesDeMovimiento() {
-		// TODO Auto-generated method stub
+	public Submarino(Area areaJuego, int nivel) {
+		super(areaJuego, nivel);
+		this.velocidad = 10;
+		this.areaEntidad = new Area(90,30);
+		this.posX = Math.divideExact(areaJuego.getAncho(), 2);
+		this.posY = posY - 20;
+		
 		
 	}
 
 	@Override
 	public int moverDerecha() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nuevaX = posX + velocidad;
+        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAlto())) {
+        	posX = nuevaX;
+        }
+        return posX;
 	}
 
 	@Override
 	public int moverIzquierda() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nuevaX = posX - velocidad;
+        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAlto())) {
+        	posX = nuevaX;
+        }
+        return posX;
 	}
+	
+    public int moverArriba() {
+        int nuevaY = posY - velocidad;
+        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
+            posY = nuevaY;
+        }
+        return posY;
+    }
 
+    public int moverAbajo() {
+        int nuevaY = posY + velocidad;
+        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
+            posY = nuevaY;
+        }
+        return posY;
+    }
+	
 }

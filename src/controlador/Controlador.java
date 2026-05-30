@@ -1,13 +1,19 @@
 package controlador;
 
-import modelo.MovimientoBidireccional;
+import juego.JuegoSubmarino;
 
 public class Controlador {
 	
 	private static Controlador instance;
-	private JuegoSubmarino juego ;
+	private JuegoSubmarino juego;
 	
 	
+	
+	protected Controlador() {
+		super();
+		this.juego = new JuegoSubmarino();
+	}
+
 	//singleton
 	public static Controlador getInstance() {
 		if(instance == null)
@@ -15,21 +21,24 @@ public class Controlador {
 		return instance;
 	}
 	
-	public void moverDerechaMB() {
+	//----------Movimiento Submarino------------------------------------------------------------------------
+	public void moverDerechaSubmarino() {
 		juego.moverDerecha();
 	}
 	
-	public void moverIzquierdaMB() {
-		mb.moverIzquierda();
+	public void moverIzquierdaSubmarino() {
+		juego.moverIzquierda();
 	}
 	
-	public void moverArribaMB() {
-		mb.moverArriba();
+	public void moverArribaSubmarino() {
+		juego.moverArriba();
 	}
 	
-	public void moverAbajoMB() {
-		mb.moverAbajo();
+	public void moverAbajoSubmarino() {
+		juego.moverAbajo();
 	}
+	
+	//----------Movimiento Submarino------------------------------------------------------------------------
 	
 	
 
