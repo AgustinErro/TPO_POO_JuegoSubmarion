@@ -11,7 +11,15 @@ public class CargaProfundidad extends EntdiadMovible{
 		super(areaJuego, nivel);
 		this.posX = posX;
 		this.posY = posY;
+		this.velocidad = 5 + nivel;
 	}
-
+	
+    public int moverAbajo() {
+        int nuevaY = posY + velocidad;
+        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
+            posY = nuevaY;
+        }
+        return posY;
+    }
 
 }
