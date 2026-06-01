@@ -2,6 +2,7 @@ package entidades;
 
 import auxiliares.Area;
 import auxiliares.Direccion;
+import views.MovimientoView;
 
 public abstract class EntdiadMovible {
 	
@@ -47,5 +48,9 @@ public abstract class EntdiadMovible {
 	protected void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
+	
+	public MovimientoView toView() {
+    	return new MovimientoView(posX, posY, areaEntidad.getAncho(), areaEntidad.getAlto());
+    }
 
 }

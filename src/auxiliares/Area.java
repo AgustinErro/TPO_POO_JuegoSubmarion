@@ -8,11 +8,7 @@ public class Area {
         this.ancho = ancho;
         this.alto = alto;
     }
-    
-    public Area(int radio) {
-    	
-    }
-    
+        
 
     public boolean estaDentro(int x, int y, int ancho, int alto) {
         return (x >= 0 && x + ancho <= this.ancho) &&
@@ -20,7 +16,7 @@ public class Area {
     }
 
     public boolean estaDentroHorizontal(int x, int ancho) {
-        return (x >= 0 && x + ancho <= this.ancho - 20);
+        return (x >= 0 && x + ancho <= this.ancho);
     }
 
     public boolean estaDentroVertical(int y, int alto) {

@@ -40,7 +40,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	@Override
 	public int moverDerecha() {
 		int nuevaX = this.posX + this.velocidad;
-        if (areaJuego.estaDentroHorizontal(nuevaX, this.areaEntidad.getAncho())) {
+        if (areaJuego.estaDentroHorizontal(nuevaX, (this.areaEntidad.getAncho()*2+1))) {
             this.posX = nuevaX;
         }
         else

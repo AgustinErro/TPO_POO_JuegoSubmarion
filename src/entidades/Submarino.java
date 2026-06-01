@@ -17,11 +17,12 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 		
 		
 	}
-
+	
+	//-----------MOVIMIENTO------------------------------------------------
 	@Override
 	public int moverDerecha() {
 		int nuevaX = posX + velocidad;
-        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAlto())) {
+        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAncho())) {
         	posX = nuevaX;
         }
         return posX;
@@ -30,7 +31,7 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 	@Override
 	public int moverIzquierda() {
 		int nuevaX = posX - velocidad;
-        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAlto())) {
+        if (areaJuego.estaDentroHorizontal(nuevaX, areaEntidad.getAncho())) {
         	posX = nuevaX;
         }
         return posX;
@@ -51,5 +52,15 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
         }
         return posY;
     }
-	
+  //--------------------------------------------------------------------------
+  //---------DAÑO-------------------------------------------------------------  
+    public void detectarDaño() {
+    	
+    }
+    
+    private void recibirDaño(int distancia) {
+    	
+    	
+    }
+    
 }
