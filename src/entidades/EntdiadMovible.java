@@ -17,8 +17,6 @@ public abstract class EntdiadMovible {
 	
 	public EntdiadMovible(Area areaJuego, int nivel) {
 		super();
-		this.areaEntidad = areaEntidad;
-		this.areaJuego = areaJuego;
 	}
 
 	protected int getPosX() {

@@ -30,4 +30,14 @@ public class Area {
     public int getAlto() {
         return alto;
     }
+    
+    public int getCentroX() {
+        return this.ancho / 2;
+    }
+
+    public int getCentroY() {
+        return this.alto / 2;
+    }
+    
+    
 }
