@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Random;
+
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
 
@@ -7,7 +9,6 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 
 	private int vidas;
 	private int salud;
-	private int puntos;
 	
 	public Submarino(Area areaJuego, int nivel) {
 		super(areaJuego, nivel);
@@ -17,11 +18,16 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 		this.posY = posY - 20;
 		this.salud = 100;
 		this.vidas = 3;
-			
-		
-		
 	}
 	
+	public int getVidas() {
+		return vidas;
+	}
+
+	public int getSalud() {
+		return salud;
+	}
+
 	//-----------MOVIMIENTO------------------------------------------------
 	@Override
 	public int moverDerecha() {
@@ -56,9 +62,15 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
         }
         return posY;
     }
+    
+    public void volverPosInicial() {
+    	this.posX = Math.divideExact(areaJuego.getAncho(), 2);
+		this.posY = posY - 20;	
+	}
+
   //--------------------------------------------------------------------------
   //---------DAÑO-------------------------------------------------------------  
-    public void detectarDaño(int centroCargaX, int centroCargaY) {
+    public int detectarDaño(int centroCargaX, int centroCargaY) {
     	
     	int limiteIzquierdo = this.posX;
         int limiteDerecho = this.posX + this.areaEntidad.getAncho();
@@ -73,17 +85,19 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
     	
         int distanciaAlBorde = (int) Math.sqrt((diferenciaX * diferenciaX) + (diferenciaY * diferenciaY));
     	
-    	recibirDaño(distanciaAlBorde);
+        if (distanciaAlBorde>100)
+        	return 30;
+        else
+        	return calcularDaño(distanciaAlBorde);
 			
     }
     
-    private void recibirDaño(int distancia) {
+    private int calcularDaño(int distancia) {
         
-        if (distancia > 100) {
-            this.puntos += 30;
-        } 
-        else if (distancia > 50 && distancia <= 100) {
-            this.puntos += 10;
+    	int puntos = 0;
+    	
+        if (distancia > 50 && distancia <= 100) {
+            puntos = 10;
             this.salud -= 30;
         } 
         else if (distancia > 10 && distancia <= 50) {
@@ -96,10 +110,15 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
         if (this.salud <= 0) {
             perderVida();
         }
+        return puntos;
     }
     private void perderVida() {
         this.vidas--;
         this.salud = 100;
+    }
+    
+    public void sumarVidas(int vidasExtra) {
+    	this.vidas = this.vidas + vidasExtra;
     }
     
 }
