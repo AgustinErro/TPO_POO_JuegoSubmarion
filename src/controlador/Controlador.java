@@ -51,4 +51,24 @@ public class Controlador {
 		 
 	 }
 	//----------------------------------------------------------------------------------------------------
+	 
+	 public int getAnchoArea() {
+		return this.juego.getAncho();
+	}
+		
+	public int getAltoArea() {
+		return this.juego.getAlto();
+	}
+	
+	public int getNivel() {
+		return this.juego.getNivel();
+	} 
+	
+	public int getvidasRestantes() {
+		return this.juego.vidasRestantes();
+	}
+	
+	public int getsaludRestante() {
+		return this.juego.saludRestante();
+	}
 }

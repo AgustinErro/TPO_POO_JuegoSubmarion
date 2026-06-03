@@ -47,4 +47,11 @@ public class MovimientoView {
 	public void setAlto(int alto) {
 		this.alto = alto;
 	}
+
+	@Override
+	public String toString() {
+		return "MovimientoView [posicionX=" + posicionX + ", posicionY=" + posicionY + "]";
+	}
+	
+	
 }

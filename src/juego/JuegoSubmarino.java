@@ -37,6 +37,7 @@ public class JuegoSubmarino {
 	//-------MOVIMIENTO SUBMARINO----------
 	public void moverDerecha() {
 		submarino.moverDerecha();
+	
 		
 	}
 	public void moverIzquierda() {
@@ -102,6 +103,14 @@ public class JuegoSubmarino {
 	
 	public int saludRestante() {
 		return submarino.getSalud();
+	}
+
+	public int getAlto() {
+		return this.areaJuego.getAlto();
+	}
+
+	public int getAncho() {
+		return this.areaJuego.getAncho();
 	}
 	
 

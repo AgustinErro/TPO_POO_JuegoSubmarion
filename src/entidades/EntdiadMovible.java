@@ -17,6 +17,8 @@ public abstract class EntdiadMovible {
 	
 	public EntdiadMovible(Area areaJuego, int nivel) {
 		super();
+		this.areaJuego = areaJuego;
+		this.nivel = nivel;
 	}
 
 	protected int getPosX() {
@@ -48,7 +50,9 @@ public abstract class EntdiadMovible {
 	}
 	
 	public MovimientoView toView() {
-    	return new MovimientoView(posX, posY, areaEntidad.getAncho(), areaEntidad.getAlto());
+		MovimientoView mv = new MovimientoView(posX, posY, areaEntidad.getAncho(), areaEntidad.getAlto());
+		System.out.println(mv);
+    	return mv;
     }
 	
 }

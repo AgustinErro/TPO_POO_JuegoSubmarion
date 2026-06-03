@@ -31,6 +31,13 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	public int moverBarco() {
 		
 		//TODO si hay cargas moverlas
+		if (!cargasDisparadas.isEmpty()) {
+			for (int i = 0; i < cargasDisparadas.size(); i++) {
+				cargasDisparadas.get(i).moverAbajo();
+			}
+		}
+		
+		
 		
 		if (viajes >= 0) {
 			
