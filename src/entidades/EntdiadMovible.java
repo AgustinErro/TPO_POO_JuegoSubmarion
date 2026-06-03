@@ -51,7 +51,6 @@ public abstract class EntdiadMovible {
 	
 	public MovimientoView toView() {
 		MovimientoView mv = new MovimientoView(posX, posY, areaEntidad.getAncho(), areaEntidad.getAlto());
-		System.out.println(mv);
     	return mv;
     }
 	

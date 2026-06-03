@@ -1,6 +1,9 @@
 package controlador;
 
+import java.util.ArrayList;
+
 import juego.JuegoSubmarino;
+import views.MovimientoView;
 
 public class Controlador {
 	
@@ -41,7 +44,7 @@ public class Controlador {
 	//----------MOVIMIENTO BARCOS------------------------------------------------------------------------
 	//TODO
 	 public void moverBarcos() {
-		 
+		 juego.moverBarcos();
 	 }
 	//---------------------------------------------------------------------------------------------------
 	
@@ -70,5 +73,13 @@ public class Controlador {
 	
 	public int getsaludRestante() {
 		return this.juego.saludRestante();
+	}
+	
+	public ArrayList <MovimientoView> getBarcos(){
+		return this.juego.getBarcos();
+	}
+	
+	public MovimientoView getSubmarino() {
+		return juego.getSubmarino();
 	}
 }

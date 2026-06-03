@@ -15,7 +15,7 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 		this.velocidad = 10;
 		this.areaEntidad = new Area(90,30);
 		this.posX = Math.divideExact(areaJuego.getAncho(), 2);
-		this.posY = posY - 20;
+		this.posY = Math.divideExact(areaJuego.getAlto(), 2);
 		this.salud = 100;
 		this.vidas = 3;
 	}

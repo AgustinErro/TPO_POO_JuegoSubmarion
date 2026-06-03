@@ -54,7 +54,7 @@ public class JuegoSubmarino {
 	//-------------------------------------
 	//------------MOVER BARCOS-------------
 	public void moverBarcos() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < barcos.size(); i++) {
 			this.barcos.get(i).moverBarco();
 		}
 	}

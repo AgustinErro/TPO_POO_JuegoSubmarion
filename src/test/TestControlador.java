@@ -8,17 +8,85 @@ public class TestControlador {
 		// TODO Auto-generated method stub
 		
 		//Test get infos
-		System.out.println(Controlador.getInstance().getAnchoArea());
-		System.out.println(Controlador.getInstance().getAltoArea());
-		System.out.println(Controlador.getInstance().getNivel());
-		System.out.println(Controlador.getInstance().getsaludRestante());
-		System.out.println(Controlador.getInstance().getvidasRestantes());
+			System.out.println("Ancho de area de juego =" +Controlador.getInstance().getAnchoArea());
+			System.out.println("Alto de area de juego =" +Controlador.getInstance().getAltoArea());
+			System.out.println("Nivel =" +Controlador.getInstance().getNivel());
+			System.out.println("Salud =" +Controlador.getInstance().getsaludRestante());
+			System.out.println("Vidas =" +Controlador.getInstance().getvidasRestantes());
+			System.out.println();
 		
 		
 		//Test movimiento Submarino
-		Controlador.getInstance().moverAbajoSubmarino();
-		System.out.println("PosX = " + Controlador.getInstance().);
-		
+			System.out.println("PosSubmarino = " + Controlador.getInstance().getSubmarino());
+			Controlador.getInstance().moverAbajoSubmarino();
+			Controlador.getInstance().moverIzquierdaSubmarino();
+			System.out.println("PosSubmarino = " + Controlador.getInstance().getSubmarino());
+			Controlador.getInstance().moverArribaSubmarino();
+			Controlador.getInstance().moverDerechaSubmarino();
+			System.out.println("PosSubmarino = " + Controlador.getInstance().getSubmarino());
+			System.out.println();
+			
+		//Test movimiento Barco
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			System.out.println("PosBarco =  "+ Controlador.getInstance().getBarcos());
+			Controlador.getInstance().moverBarcos();
+			
+
 		
 		
 		

@@ -9,20 +9,29 @@ import interfaces.moviminetoHorizontal;
 
 public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	
-	private int id;
 	private ArrayList<CargaProfundidad> cargasDisparadas;
 	private int viajes;
 	private boolean direccion;
+	private int esperar;
 
 	
 	public Barco(Area areaJuego, int nivel) {
 		super(areaJuego, nivel);
-		this.id = ContadorGlobal.registrarNuevoBarco();
+		
+		this.posY = 100;
+		this.viajes = 3;
+		this.areaJuego = areaJuego;
 		this.areaEntidad = new Area(90,30);
-		this.velocidad = (10 + 2* nivel); 
+		this.velocidad = ( 200);
+		
+		this.posInicial();
+		/*
 		Random random = new Random();	
 		this.direccion = random.nextBoolean();
-		this.posX = ((this.velocidad == 0) ? 0 : areaJuego.getAncho()-100);
+		this.posX = ((this.direccion) ? 100 : 200);
+		*/
+		this.cargasDisparadas = new ArrayList<CargaProfundidad>();
+		
 	}
 
 
@@ -36,8 +45,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 				cargasDisparadas.get(i).moverAbajo();
 			}
 		}
-		
-		
+
 		
 		if (viajes >= 0) {
 			
@@ -59,13 +67,21 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	@Override
 	public int moverDerecha() {
 		int nuevaX = this.posX + this.velocidad;
-        if (areaJuego.estaDentroHorizontal(nuevaX, (this.areaEntidad.getAncho()*2+1))) {
+        if (areaJuego.estaDentroHorizontal(nuevaX, (this.areaEntidad.getAncho()))) {
             this.posX = nuevaX;
         }
         else {
-        	//poner timer de espera antes de volver a iniciar viaje
-        	this.volverPosInicial();
-        	this.viajes = this.viajes -1;
+        	//timer de espera antes de volver a iniciar viaje
+        	if (esperar > 0) {
+	        	esperar--;
+        	}
+        	else {
+        		this.posInicial();
+	        	this.viajes = this.viajes -1;
+	        	
+	        	Random random = new Random();
+	    		this.esperar = random.nextInt(1, 10);
+        	}
         }	
         return posX;
 		
@@ -78,21 +94,29 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
             this.posX = nuevaX;
         }
         else {
-        	//poner timer de espera antes de volver a iniciar viaje
-        	this.volverPosInicial();
-        	this.viajes = this.viajes-1;
+        	//timer de espera antes de volver a iniciar viaje
+        	if (esperar > 0) {
+	        	esperar--;
+        	}
+        	else {
+        		this.posInicial();
+	        	this.viajes = this.viajes -1;
+	        	
+	        	Random random = new Random();
+	    		this.esperar = random.nextInt(1, 10);
+        	}
         }
         return posX;
 		
 	}
 	
-	public void volverPosInicial() {
+	public void posInicial() {
 		Random random = new Random();
     	this.direccion = random.nextBoolean();
-		this.posX = ((this.velocidad == 0) ? 0 : areaJuego.getAncho()-100);
+    	this.posX = ((this.direccion) ? 0 : areaJuego.getAncho());;
 		
 	}
-
+	
 	//---------------------------------------------------------
 
 	public void dispararCarga() {
@@ -100,11 +124,6 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 		
 		CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego ,this.nivel , this.posX, this.posY);
 		this.cargasDisparadas.add(nuevaCarga);
-	}
-
-
-	protected int getId() {
-		return id;
 	}
 
 
