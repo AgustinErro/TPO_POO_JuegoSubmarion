@@ -1,6 +1,5 @@
 package entidades;
 
-import java.util.Random;
 
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
@@ -10,10 +9,8 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 	private int vidas;
 	private int salud;
 	
-	public Submarino(Area areaJuego, int nivel) {
-		super(areaJuego, nivel);
-		this.velocidad = 10;
-		this.areaEntidad = new Area(90,30);
+	public Submarino(Area areaJuego, int ancho, int alto, int velocidad) {
+		super(areaJuego, ancho, alto, velocidad);
 		this.posX = Math.divideExact(areaJuego.getAncho(), 2);
 		this.posY = Math.divideExact(areaJuego.getAlto(), 2);
 		this.salud = 100;
@@ -85,10 +82,8 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
     	
         int distanciaAlBorde = (int) Math.sqrt((diferenciaX * diferenciaX) + (diferenciaY * diferenciaY));
     	
-        if (distanciaAlBorde>100)
-        	return 30;
-        else
-        	return calcularDaño(distanciaAlBorde);
+  
+        return calcularDaño(distanciaAlBorde);
 			
     }
     
@@ -96,7 +91,10 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
         
     	int puntos = 0;
     	
-        if (distancia > 50 && distancia <= 100) {
+    	if (distancia>100) {
+    		puntos = 30;
+    	}
+    	else if (distancia > 50 && distancia <= 100) {
             puntos = 10;
             this.salud -= 30;
         } 

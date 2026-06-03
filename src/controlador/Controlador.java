@@ -41,10 +41,11 @@ public class Controlador {
 		juego.moverAbajo();
 	}
 	
-	//----------MOVIMIENTO BARCOS------------------------------------------------------------------------
+	//----------EJECUTAR BARCOS------------------------------------------------------------------------
 	//TODO
-	 public void moverBarcos() {
-		 juego.moverBarcos();
+	 public void moverEntidadesAutomaticas() {
+		 juego.moverEntidadesAutomaticas();
+		 
 	 }
 	//---------------------------------------------------------------------------------------------------
 	

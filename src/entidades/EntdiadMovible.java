@@ -1,7 +1,6 @@
 package entidades;
 
 import auxiliares.Area;
-import auxiliares.Direccion;
 import views.MovimientoView;
 
 public abstract class EntdiadMovible {
@@ -9,16 +8,16 @@ public abstract class EntdiadMovible {
 	protected Area areaEntidad,areaJuego;
 	protected int posX, posY;
 	protected int velocidad;
-	protected int nivel;
 	
 	
 	
 	
 	
-	public EntdiadMovible(Area areaJuego, int nivel) {
+	public EntdiadMovible(Area areaJuego, int ancho, int alto, int velocidad) {
 		super();
 		this.areaJuego = areaJuego;
-		this.nivel = nivel;
+		this.velocidad = velocidad;
+		this.areaEntidad = new Area(ancho, alto);
 	}
 
 	protected int getPosX() {

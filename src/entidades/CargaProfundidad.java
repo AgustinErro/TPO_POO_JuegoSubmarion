@@ -4,30 +4,28 @@ import java.util.Random;
 
 import auxiliares.Area;
 import auxiliares.ContadorGlobal;
-import auxiliares.Direccion;
 
 public class CargaProfundidad extends EntdiadMovible{
 	
 	private int id;
 	private int profExplosion;
-	private int radioExplosion;
 	private boolean exploto;
 
 	
-	public CargaProfundidad(Area areaJuego, int nivel, int posX, int posY) {
-		super(areaJuego, nivel);
+	public CargaProfundidad(Area areaJuego, int ancho, int alto, int posX, int posY, int velocidad) {
+		super(areaJuego, ancho, alto, velocidad);
+		//this.areaEntidad = new Area(ancho,alto);
 		this.posX = posX;
 		this.posY = posY;
-		this.velocidad = 5 + nivel;
+		//this.velocidad = velocidad;
 		this.id =  ContadorGlobal.registrarNuevaCarga();
 		this.exploto = false;
 		Random random = new Random();
 		
 		this.profExplosion = random.nextInt(300, 701);
 		}
-
-
-	public int moverAbajo() {
+	
+	public void moverAbajo() {
 		if (posY < this.profExplosion) {	
 	        int nuevaY = posY + velocidad;
 	        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
@@ -38,19 +36,12 @@ public class CargaProfundidad extends EntdiadMovible{
 			this.exploto = true;
 			System.out.println("Explota Carga "+ this.id +" posicion (" + this.posX +", "+ this.posY +")" );
 		}
-	    return posY;
     }
 
 
 	public int getProfExplosion() {
 		return profExplosion;
 	}
-
-
-	public int getRadioExplosion() {
-		return radioExplosion;
-	}
-
 
 	public int getId() {
 		return id;
@@ -59,6 +50,11 @@ public class CargaProfundidad extends EntdiadMovible{
 
 	protected boolean isExploto() {
 		return exploto;
+	}
+
+	public int[] getCentro() {
+		int[] centro = {this.areaEntidad.getCentroX(),this.areaEntidad.getCentroY()};
+		return centro;
 	}
 	
 	

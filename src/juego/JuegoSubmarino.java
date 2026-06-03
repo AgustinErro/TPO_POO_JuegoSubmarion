@@ -11,9 +11,12 @@ public class JuegoSubmarino {
 
 	private int nivel;
 	private ArrayList<Barco> barcos;
+	
 	private Submarino submarino;
 	private Area areaJuego;
 	private int puntos;
+	private int velocidadSubmarino;
+	private int velocidadBarco;
 	
 
 	
@@ -24,12 +27,12 @@ public class JuegoSubmarino {
 		this.puntos = 0;
 		
 		//-----CREADOR SUBMARINO
-		this.submarino = new Submarino(areaJuego,nivel);
+		this.submarino = new Submarino(areaJuego, 90, 30, velocidadSubmarino);
 		
 		//-----CREADOR DE BARCOS---------
 		this.barcos = new ArrayList<Barco>();
 		for (int i = 0; i < 3; i++) {
-			Barco nuevoBarco = new Barco(areaJuego, nivel); 
+			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco); 
 			this.barcos.add(nuevoBarco);
 		}
 	}
@@ -38,7 +41,6 @@ public class JuegoSubmarino {
 	public void moverDerecha() {
 		submarino.moverDerecha();
 	
-		
 	}
 	public void moverIzquierda() {
 		submarino.moverIzquierda();
@@ -51,26 +53,34 @@ public class JuegoSubmarino {
 		submarino.moverAbajo();
 		
 	}
-	//-------------------------------------
-	//------------MOVER BARCOS-------------
-	public void moverBarcos() {
+	
+	//------------MOVER BARCOS y CARGAS------------
+	public void moverEntidadesAutomaticas() {
 		for (int i = 0; i < barcos.size(); i++) {
 			this.barcos.get(i).moverBarco();
+			this.barcos.get(i).moverCargas();			
+		}
+		
+	}
+	
+	public void gestionarDaños() {
+		for (int i = 0; i < barcos.size(); i++) {
+			this.barcos.get(i).hayCargasExplotadas();		
 		}
 	}
-	//-------------------------------------
+
 	//-----------GESTIONAR NIVEL----------
-	public void iniciarNivel() {
+	public void pasarNivel() {
 		for (int i = 0; i < 3; i++) {
-			Barco nuevoBarco = new Barco(areaJuego, nivel); 
+			Barco nuevoBarco = new Barco(areaJuego, nivel, 90, 30); 
 			this.barcos.add(nuevoBarco);
 		}
 		
 	}
 	public void terminarNivel() {
-		this.barcos.clear();
 		this.puntos +=200;
 		this.nivel +=1;
+		barcos.clear();
 		submarino.volverPosInicial();
 	}
 	

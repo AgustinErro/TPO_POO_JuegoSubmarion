@@ -2,34 +2,34 @@ package views;
 
 public class MovimientoView {
 	
-    private int posicionX;
-    private int posicionY;
+    private int posX;
+    private int posY;
     private int ancho;
     private int alto;	
     
     public MovimientoView() {}
 
 	public MovimientoView(int posicionX, int posicionY, int ancho, int alto) {
-		this.posicionX = posicionX;
-		this.posicionY = posicionY;
+		this.posX = posicionX;
+		this.posY = posicionY;
 		this.ancho = ancho;
 		this.alto = alto;
 	}
 
 	public int getPosicionX() {
-		return posicionX;
+		return posX;
 	}
 
 	public void setPosicionX(int posicionX) {
-		this.posicionX = posicionX;
+		this.posX = posicionX;
 	}
 
 	public int getPosicionY() {
-		return posicionY;
+		return posY;
 	}
 
 	public void setPosicionY(int posicionY) {
-		this.posicionY = posicionY;
+		this.posY = posicionY;
 	}
 
 	public int getAncho() {
@@ -50,8 +50,9 @@ public class MovimientoView {
 
 	@Override
 	public String toString() {
-		return "MovimientoView [posicionX=" + posicionX + ", posicionY=" + posicionY + "]";
+		return "MovimientoView [posicionX=" + posX + ", posicionY=" + posY + "]";
 	}
+	
 	
 	
 }
