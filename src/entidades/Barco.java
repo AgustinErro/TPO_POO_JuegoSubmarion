@@ -27,8 +27,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	
 	//----------Movimiento Barco-----------------------------
 	public void moverBarco() {
-		
-		//this.moverCargas();
+
 		
 		if (viajes >= 0) {
 			

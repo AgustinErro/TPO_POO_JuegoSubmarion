@@ -17,13 +17,13 @@ public class JuegoSubmarino {
 	private int puntos;
 	private int vidasExtra;
 	private int velocidadSubmarino = 10;
-	private int velocidadBarco = 80;
+	private int velocidadBarco = 50;
 	
 
 	
 	public JuegoSubmarino() {
 		super();
-		this.areaJuego= new Area(1000, 900);
+		this.areaJuego= new Area(1000, 1000);
 		this.nivel = 1;
 		this.puntos = 0;
 		
@@ -102,10 +102,18 @@ public class JuegoSubmarino {
 		this.puntos +=200;
 		for (int i = 0; i < 3; i++) {
 			Barco nuevoBarco = new Barco(areaJuego, nivel, 90, 30); 
-			this.barcos.add(nuevoBarco);
-			
+			this.barcos.add(nuevoBarco);	
 		}
-		
+	}
+	
+	public boolean terminarJuego() {
+		if (submarino.getVidas() < 0) {
+			System.out.println("Se termina el juego");
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 		
 	//---------------------------------------

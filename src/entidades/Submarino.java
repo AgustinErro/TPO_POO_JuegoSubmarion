@@ -52,7 +52,7 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
 	
     public int moverArriba() {
         int nuevaY = posY - velocidad;
-        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
+        if (areaJuego.estaDentroVertical(nuevaY-300, areaEntidad.getAlto())) {
             posY = nuevaY;
         }
         return posY;
@@ -60,7 +60,7 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
 
     public int moverAbajo() {
         int nuevaY = posY + velocidad;
-        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto())) {
+        if (areaJuego.estaDentroVertical(nuevaY, areaEntidad.getAlto()+300)) {
             posY = nuevaY;
         }
         return posY;
@@ -112,7 +112,7 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
             System.out.println("Menos 50 de salud");
         } 
         else if (distancia <= 10) {
-            perderVida(); 
+        	this.salud -= 100; 
         }
 
         if (this.salud <= 0) {
@@ -121,9 +121,12 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
         return puntos;
     }
     private void perderVida() {
-        this.vidas--;
-        this.salud = 100;
-        System.out.println("Se pierde una vida");
+    	System.out.println("Se pierde una vida");
+    	this.vidas--;
+        if(vidas>=0) 
+        	this.salud = 100;
+        else
+        	this.salud = 0;
     }
     
     public void sumarVidas(int vidasExtra) {
