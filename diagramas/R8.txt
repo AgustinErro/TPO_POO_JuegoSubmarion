@@ -1,0 +1,27 @@
+@startuml
+title R8 - Cambio de Nivel
+
+participant Controlador
+participant JuegoSubmarino
+participant Barco
+
+Controlador -> JuegoSubmarino : sincronizarNivel()
+
+loop por cada Barco (orden inverso)
+    JuegoSubmarino -> Barco : isInactivo()
+    note right : viajes == 0 && cargasDisparadas.isEmpty()
+    Barco --> JuegoSubmarino : true
+    JuegoSubmarino -> JuegoSubmarino : barcos.remove(i)
+end
+
+alt barcos.isEmpty()
+    JuegoSubmarino -> JuegoSubmarino : pasarNivel()
+    JuegoSubmarino -> JuegoSubmarino : nivel += 1
+    JuegoSubmarino -> JuegoSubmarino : puntos += 200
+    loop 3 veces
+        JuegoSubmarino -> Barco : new Barco(..., velocidadBarco, nivel)
+        Barco --> JuegoSubmarino : nuevoBarco
+        JuegoSubmarino -> JuegoSubmarino : barcos.add(nuevoBarco)
+    end
+end
+@enduml

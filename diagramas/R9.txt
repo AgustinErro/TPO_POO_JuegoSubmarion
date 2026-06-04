@@ -1,0 +1,25 @@
+@startuml
+title R9 - Incremento de Dificultad por Nivel
+
+participant JuegoSubmarino
+participant Barco
+participant CargaProfundidad
+
+JuegoSubmarino -> JuegoSubmarino : pasarNivel()
+JuegoSubmarino -> JuegoSubmarino : velocidadBarco = (int)(velocidadBarco * 1.2)
+note right : +20% de velocidad por nivel
+
+loop 3 veces
+    JuegoSubmarino -> Barco : new Barco(..., velocidadBarco, nivel)
+    note right : Barcos más rápidos
+    Barco --> JuegoSubmarino : nuevoBarco
+end
+
+note over Barco, CargaProfundidad : Al disparar, la carga hereda la velocidad del barco
+Barco -> CargaProfundidad : new CargaProfundidad(..., velocidad)
+note right : Caída más rápida a mayor nivel
+
+note over Barco : Probabilidad de disparo aumenta con el nivel
+Barco -> Barco : limite = max(5, 10 - (nivel-1)/5)
+note right : Desde 1/9 en nivel 1 hasta 1/4 en nivel 26+
+@enduml

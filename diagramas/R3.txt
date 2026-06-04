@@ -1,0 +1,33 @@
+@startuml
+title R3 - Generación Aleatoria de Barcos
+
+participant Barco
+participant Random
+participant Area
+
+Barco -> Barco : posInicial()
+Barco -> Random : nextBoolean()
+Random --> Barco : direccion
+
+alt direccion = true (izquierda a derecha)
+    Barco -> Barco : posX = -100
+else direccion = false (derecha a izquierda)
+    Barco -> Barco : posX = areaJuego.getAncho() + 1
+end
+
+Barco -> Random : nextInt(2, 10)
+Random --> Barco : esperar
+
+loop cada tick de movimiento
+    alt direccion = true
+        Barco -> Barco : moverDerecha()
+    else
+        Barco -> Barco : moverIzquierda()
+    end
+    Barco -> Area : estaDentroHorizontal(posX, ancho)
+    alt llegó al borde
+        Barco -> Barco : posInicial()
+        Barco -> Barco : viajes--
+    end
+end
+@enduml

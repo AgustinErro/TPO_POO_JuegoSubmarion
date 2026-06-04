@@ -1,0 +1,169 @@
+@startuml
+
+interface movimientoHorizontal {
+    + moverDerecha(): int
+    + moverIzquierda(): int
+}
+
+abstract class EntidadMovible {
+    # areaEntidad: Area
+    # areaJuego: Area
+    # posX: int
+    # posY: int
+    # velocidad: int
+    + EntidadMovible(areaJuego: Area, ancho: int, alto: int, velocidad: int)
+    + getPosX(): int
+    + getPosY(): int
+    + toView(): MovimientoView
+}
+
+class Barco {
+    - cargasDisparadas: ArrayList<CargaProfundidad>
+    - viajes: int
+    - direccion: boolean
+    - esperar: int
+    - nivel: int
+    + Barco(areaJuego: Area, ancho: int, alto: int, velocidad: int, nivel: int)
+    + moverBarco(): void
+    + moverDerecha(): int
+    + moverIzquierda(): int
+    + posInicial(): void
+    + dispararCarga(): void
+    + moverCargas(): void
+    + hayCargasExplotadas(): ArrayList<int[]>
+    + isInactivo(): boolean
+    + getViajes(): int
+}
+
+class Submarino {
+    - vidas: int
+    - salud: int
+    + Submarino(areaJuego: Area, ancho: int, alto: int, velocidad: int)
+    + moverDerecha(): int
+    + moverIzquierda(): int
+    + moverArriba(): int
+    + moverAbajo(): int
+    + detectarDano(centrosExplocion: ArrayList<int[]>): int
+    - calcularDano(distancia: int): int
+    - perderVida(): void
+    + sumarVidas(vidasExtra: int): void
+    + getVidas(): int
+    + getSalud(): int
+}
+
+class CargaProfundidad {
+    - id: int
+    - profExplosion: int
+    - exploto: boolean
+    + CargaProfundidad(areaJuego: Area, ancho: int, alto: int, posX: int, posY: int, velocidad: int)
+    + moverAbajo(): void
+    + getProfExplosion(): int
+    + getId(): int
+    # isExploto(): boolean
+    + getCentro(): int[]
+}
+
+class Area {
+    - ancho: int
+    - alto: int
+    + Area(ancho: int, alto: int)
+    + estaDentro(x: int, y: int, ancho: int, alto: int): boolean
+    + estaDentroHorizontal(x: int, ancho: int): boolean
+    + estaDentroVertical(y: int, alto: int): boolean
+    + getAncho(): int
+    + getAlto(): int
+    + getCentroX(): int
+    + getCentroY(): int
+}
+
+class ContadorGlobal {
+    - {static} totalBarcos: int
+    - {static} totalCargas: int
+    + {static} registrarNuevoBarco(): int
+    + {static} registrarNuevaCarga(): int
+    + {static} getTotalBarcos(): int
+    + {static} getTotalCargas(): int
+}
+
+class MovimientoView {
+    - posX: int
+    - posY: int
+    - ancho: int
+    - alto: int
+    + MovimientoView()
+    + MovimientoView(posicionX: int, posicionY: int, ancho: int, alto: int)
+    + getPosicionX(): int
+    + setPosicionX(posicionX: int): void
+    + getPosicionY(): int
+    + setPosicionY(posicionY: int): void
+    + getAncho(): int
+    + setAncho(ancho: int): void
+    + getAlto(): int
+    + setAlto(alto: int): void
+    + toString(): String
+}
+
+class JuegoSubmarino {
+    - nivel: int
+    - barcos: ArrayList<Barco>
+    - submarino: Submarino
+    - areaJuego: Area
+    - puntos: int
+    - vidasExtra: int
+    - velocidadSubmarino: int
+    - velocidadBarco: int
+    + JuegoSubmarino()
+    + moverDerecha(): void
+    + moverIzquierda(): void
+    + moverArriba(): void
+    + moverAbajo(): void
+    + moverEntidadesAutomaticas(): void
+    + sincronizarSubmarino(): void
+    + sincronizarNivel(): void
+    + pasarNivel(): void
+    + terminarJuego(): boolean
+    + getBarcos(): ArrayList<MovimientoView>
+    + getSubmarino(): MovimientoView
+    + getNivel(): int
+    + vidasRestantes(): int
+    + saludRestante(): int
+    + getAlto(): int
+    + getAncho(): int
+    + getPuntos(): int
+}
+
+class Controlador {
+    - {static} instance: Controlador
+    - juego: JuegoSubmarino
+    # Controlador()
+    + {static} getInstance(): Controlador
+    + moverDerechaSubmarino(): void
+    + moverIzquierdaSubmarino(): void
+    + moverArribaSubmarino(): void
+    + moverAbajoSubmarino(): void
+    + procesosAutomaticos(): void
+    + getAnchoArea(): int
+    + getAltoArea(): int
+    + getNivel(): int
+    + getPuntos(): int
+    + getvidasRestantes(): int
+    + getsaludRestante(): int
+    + getBarcos(): ArrayList<MovimientoView>
+    + getSubmarino(): MovimientoView
+}
+
+Barco --|> EntidadMovible
+Submarino --|> EntidadMovible
+CargaProfundidad --|> EntidadMovible
+Barco ..|> movimientoHorizontal
+Submarino ..|> movimientoHorizontal
+EntidadMovible *-- Area
+EntidadMovible ..> MovimientoView
+Barco *-- CargaProfundidad
+CargaProfundidad ..> ContadorGlobal
+JuegoSubmarino *-- Barco
+JuegoSubmarino *-- Submarino
+JuegoSubmarino *-- Area
+Controlador *-- JuegoSubmarino
+
+@enduml

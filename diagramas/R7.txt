@@ -1,0 +1,28 @@
+@startuml
+title R7 - Gestión de Vidas
+
+participant JuegoSubmarino
+participant Submarino
+
+== Perder una vida ==
+Submarino -> Submarino : calcularDano(distancia)
+note right : salud <= 0
+Submarino -> Submarino : perderVida()
+Submarino -> Submarino : vidas--
+alt vidas >= 0
+    Submarino -> Submarino : salud = 100
+else vidas < 0
+    Submarino -> Submarino : salud = 0
+    note right : Game Over
+end
+
+== Ganar una vida extra ==
+JuegoSubmarino -> JuegoSubmarino : sincronizarSubmarino()
+JuegoSubmarino -> JuegoSubmarino : vidasPorPuntos = puntos / 500
+alt vidasPorPuntos > vidasExtra
+    JuegoSubmarino -> Submarino : sumarVidas(vidasPorPuntos - vidasExtra)
+    Submarino -> Submarino : vidas += vidasExtra
+    JuegoSubmarino -> JuegoSubmarino : vidasExtra = vidasPorPuntos
+    note right : +1 vida cada 500 puntos
+end
+@enduml

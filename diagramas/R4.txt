@@ -1,0 +1,27 @@
+@startuml
+title R4 - Lanzamiento de Cargas de Profundidad
+
+participant Barco
+participant Random
+participant Area
+participant CargaProfundidad
+participant ContadorGlobal
+
+Barco -> Barco : moverBarco()
+Barco -> Area : estaDentroHorizontal(posX, ancho)
+Area --> Barco : true
+Barco -> Barco : dispararCarga()
+Barco -> Random : nextInt(1, limite)
+note right : limite = max(5, 10 - (nivel-1)/5)
+Random --> Barco : valor
+
+alt valor == 2
+    Barco -> CargaProfundidad : new CargaProfundidad(areaJuego, posX + ancho/2, posY, velocidad)
+    CargaProfundidad -> ContadorGlobal : registrarNuevaCarga()
+    ContadorGlobal --> CargaProfundidad : id
+    CargaProfundidad -> Random : nextInt(300, 701)
+    Random --> CargaProfundidad : profExplosion
+    CargaProfundidad --> Barco : nuevaCarga
+    Barco -> Barco : cargasDisparadas.add(nuevaCarga)
+end
+@enduml

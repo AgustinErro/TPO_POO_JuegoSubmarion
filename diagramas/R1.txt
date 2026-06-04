@@ -1,0 +1,23 @@
+@startuml
+title R1 - Navegación del Submarino
+
+actor Jugador
+participant Controlador
+participant JuegoSubmarino
+participant Submarino
+participant Area
+
+Jugador -> Controlador : moverDerechaSubmarino()
+Controlador -> JuegoSubmarino : terminarJuego()
+JuegoSubmarino -> Submarino : getVidas()
+Submarino --> JuegoSubmarino : vidas
+JuegoSubmarino --> Controlador : true
+Controlador -> JuegoSubmarino : moverDerecha()
+JuegoSubmarino -> Submarino : moverDerecha()
+Submarino -> Area : estaDentroHorizontal(nuevaX, ancho)
+Area --> Submarino : true / false
+alt dentro del área
+    Submarino -> Submarino : posX = nuevaX
+end
+Submarino --> JuegoSubmarino : posX
+@enduml

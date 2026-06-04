@@ -1,0 +1,22 @@
+@startuml
+title R5 - Detonación a Profundidad Aleatoria
+
+participant JuegoSubmarino
+participant Barco
+participant CargaProfundidad
+participant Area
+
+JuegoSubmarino -> Barco : moverCargas()
+
+loop por cada CargaProfundidad
+    Barco -> CargaProfundidad : moverAbajo()
+    alt posY < profExplosion
+        CargaProfundidad -> Area : estaDentroVertical(nuevaY, alto)
+        Area --> CargaProfundidad : true
+        CargaProfundidad -> CargaProfundidad : posY += velocidad
+    else posY >= profExplosion
+        CargaProfundidad -> CargaProfundidad : exploto = true
+        note right : Explota entre profundidad 300 y 700
+    end
+end
+@enduml
