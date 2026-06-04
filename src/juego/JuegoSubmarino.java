@@ -80,26 +80,34 @@ public class JuegoSubmarino {
 		    submarino.sumarVidas(vidasPorPuntos - vidasExtra);
 		    vidasExtra = vidasPorPuntos;
 		}
-		
 	}
-
+	
+	public void sincronizarNivel() {
+		
+		if(barcos.isEmpty()) {
+			this.pasarNivel();
+		}
+		else {
+			for (int i = barcos.size() - 1; i >= 0; i--) {
+				if (barcos.get(i).isInactivo()) {
+					barcos.remove(i);
+				}
+			}
+		}
+	}
+	
 	//-----------GESTIONAR NIVEL----------
 	public void pasarNivel() {
+		this.nivel +=1;
+		this.puntos +=200;
 		for (int i = 0; i < 3; i++) {
 			Barco nuevoBarco = new Barco(areaJuego, nivel, 90, 30); 
 			this.barcos.add(nuevoBarco);
+			
 		}
 		
 	}
-	public void terminarNivel() {
-		this.puntos +=200;
-		this.nivel +=1;
-		barcos.clear();
-	}
-	
-	public void reiniciarJuego() {
 		
-	}
 	//---------------------------------------
 	//----------INFO PANTALLA----------------
 	public ArrayList <MovimientoView> getBarcos() {

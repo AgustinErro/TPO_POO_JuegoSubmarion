@@ -129,12 +129,12 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		
 	}
 
-	protected boolean isActivo() {
+	public boolean isInactivo() {
 
 		return (viajes == 0 && cargasDisparadas.isEmpty());
 	}
 
-	protected int getViajes() {
+	public int getViajes() {
 		return viajes;
 	}
 	
