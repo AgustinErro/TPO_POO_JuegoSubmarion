@@ -98,11 +98,10 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 		
 		Random random = new Random();
 		
-		if (random.nextInt(1, 10) == 5) {
-			System.out.println("Disparo carga desde X = " + this.posX);
-			
-			CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego, (this.posX + this.areaEntidad.getAncho()/2)  , this.posY, 10, 10, this.velocidad);
+		if (random.nextInt(1, 7) == 3) {	
+			CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego, 10, 10, (Math.divideExact(this.areaEntidad.getAncho(), 2)+ this.posX)  , this.posY, this.velocidad);
 			this.cargasDisparadas.add(nuevaCarga);
+			System.out.println("Disparo carga "+ nuevaCarga.getId()+ " desde posicion X = " +(Math.divideExact(this.areaEntidad.getAncho(), 2) + this.posX));
 		}
 	}
 	

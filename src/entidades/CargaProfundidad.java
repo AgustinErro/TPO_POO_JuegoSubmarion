@@ -14,10 +14,10 @@ public class CargaProfundidad extends EntdiadMovible{
 	
 	public CargaProfundidad(Area areaJuego, int ancho, int alto, int posX, int posY, int velocidad) {
 		super(areaJuego, ancho, alto, velocidad);
-		//this.areaEntidad = new Area(ancho,alto);
+		this.areaEntidad = new Area(ancho,alto);
 		this.posX = posX;
 		this.posY = posY;
-		//this.velocidad = velocidad;
+		this.velocidad = velocidad;
 		this.id =  ContadorGlobal.registrarNuevaCarga();
 		this.exploto = false;
 		Random random = new Random();

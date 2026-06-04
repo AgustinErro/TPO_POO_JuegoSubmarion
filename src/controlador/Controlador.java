@@ -41,20 +41,13 @@ public class Controlador {
 		juego.moverAbajo();
 	}
 	
-	//----------EJECUTAR BARCOS------------------------------------------------------------------------
+	//----------PROCESOS EN LOOP------------------------------------------------------------------------
 	//TODO
-	 public void moverEntidadesAutomaticas() {
+	 public void procesosAutomaticos() {
 		 juego.moverEntidadesAutomaticas();
+		 juego.sincronizarSubmarino();
 		 
 	 }
-	//---------------------------------------------------------------------------------------------------
-	
-	//----------MOVIMINETO CARGAS-------------------------------------------------------------------------
-	//TODO
-	 public void moverCargas() {
-		 
-	 }
-	//----------------------------------------------------------------------------------------------------
 	 
 	 public int getAnchoArea() {
 		return this.juego.getAncho();
@@ -67,7 +60,9 @@ public class Controlador {
 	public int getNivel() {
 		return this.juego.getNivel();
 	} 
-	
+	public int getPuntos() {
+		return this.juego.getPuntos();
+	}
 	public int getvidasRestantes() {
 		return this.juego.vidasRestantes();
 	}

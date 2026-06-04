@@ -1,6 +1,8 @@
 package entidades;
 
 
+import java.util.ArrayList;
+
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
 
@@ -15,6 +17,9 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 		this.posY = Math.divideExact(areaJuego.getAlto(), 2);
 		this.salud = 100;
 		this.vidas = 3;
+		this.velocidad = velocidad;
+		this.areaEntidad = new Area(ancho, alto);
+		this.areaJuego = areaJuego;
 	}
 	
 	public int getVidas() {
@@ -24,6 +29,7 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
 	public int getSalud() {
 		return salud;
 	}
+
 
 	//-----------MOVIMIENTO------------------------------------------------
 	@Override
@@ -59,32 +65,34 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
         }
         return posY;
     }
-    
-    public void volverPosInicial() {
-    	this.posX = Math.divideExact(areaJuego.getAncho(), 2);
-		this.posY = posY - 20;	
-	}
 
-  //--------------------------------------------------------------------------
   //---------DAÑO-------------------------------------------------------------  
-    public int detectarDaño(int centroCargaX, int centroCargaY) {
+    public int detectarDaño(ArrayList<int[]> centrosExplocion) {
     	
-    	int limiteIzquierdo = this.posX;
-        int limiteDerecho = this.posX + this.areaEntidad.getAncho();
-        int limiteSuperior = this.posY;
-        int limiteInferior = this.posY + this.areaEntidad.getAlto();
-        
-        int puntoMasCercanoX = Math.max(limiteIzquierdo, Math.min(centroCargaX, limiteDerecho));
-        int puntoMasCercanoY = Math.max(limiteSuperior, Math.min(centroCargaY, limiteInferior));
-        
-        int diferenciaX = centroCargaX - puntoMasCercanoX;
-        int diferenciaY = centroCargaY - puntoMasCercanoY;
-    	
-        int distanciaAlBorde = (int) Math.sqrt((diferenciaX * diferenciaX) + (diferenciaY * diferenciaY));
-    	
-  
-        return calcularDaño(distanciaAlBorde);
-			
+    	int puntosGanados = 0;
+    		
+    	for (int i = 0; i < centrosExplocion.size(); i++) {
+    			
+    		int centroCargaX = centrosExplocion.get(i)[0];
+    		int centroCargaY = centrosExplocion.get(i)[1];
+    		
+		    int limiteIzquierdo = this.posX;
+		    int limiteDerecho = this.posX + this.areaEntidad.getAncho();
+		    int limiteSuperior = this.posY;
+		    int limiteInferior = this.posY + this.areaEntidad.getAlto();
+		        
+		    int puntoMasCercanoX = Math.max(limiteIzquierdo, Math.min(centroCargaX, limiteDerecho));
+		    int puntoMasCercanoY = Math.max(limiteSuperior, Math.min(centroCargaY, limiteInferior));
+		        
+		    int diferenciaX = centroCargaX - puntoMasCercanoX;
+		    int diferenciaY = centroCargaY - puntoMasCercanoY;
+		    	
+		    int distanciaAlBorde = (int) Math.sqrt((diferenciaX * diferenciaX) + (diferenciaY * diferenciaY));
+		        
+		    puntosGanados += calcularDaño(distanciaAlBorde);
+    	}
+
+    	return puntosGanados;
     }
     
     private int calcularDaño(int distancia) {
@@ -97,9 +105,11 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
     	else if (distancia > 50 && distancia <= 100) {
             puntos = 10;
             this.salud -= 30;
+            System.out.println("Menos 30 de salud");
         } 
         else if (distancia > 10 && distancia <= 50) {
             this.salud -= 50;
+            System.out.println("Menos 50 de salud");
         } 
         else if (distancia <= 10) {
             perderVida(); 
@@ -113,10 +123,13 @@ public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
     private void perderVida() {
         this.vidas--;
         this.salud = 100;
+        System.out.println("Se pierde una vida");
     }
     
     public void sumarVidas(int vidasExtra) {
     	this.vidas = this.vidas + vidasExtra;
+    	System.out.println("Se suma " + vidasExtra +"  vida");
     }
+    
     
 }

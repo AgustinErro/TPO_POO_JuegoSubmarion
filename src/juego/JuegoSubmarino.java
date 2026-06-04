@@ -15,8 +15,9 @@ public class JuegoSubmarino {
 	private Submarino submarino;
 	private Area areaJuego;
 	private int puntos;
-	private int velocidadSubmarino;
-	private int velocidadBarco;
+	private int vidasExtra;
+	private int velocidadSubmarino = 10;
+	private int velocidadBarco = 80;
 	
 
 	
@@ -54,19 +55,31 @@ public class JuegoSubmarino {
 		
 	}
 	
-	//------------MOVER BARCOS y CARGAS------------
+	//------------METODOS EN LOOP------------
 	public void moverEntidadesAutomaticas() {
 		for (int i = 0; i < barcos.size(); i++) {
 			this.barcos.get(i).moverBarco();
 			this.barcos.get(i).moverCargas();			
 		}
-		
 	}
 	
-	public void gestionarDaños() {
+	public void sincronizarSubmarino() {
+		
+		ArrayList<int[]> ce = new ArrayList<int[]>();
+		
 		for (int i = 0; i < barcos.size(); i++) {
-			this.barcos.get(i).hayCargasExplotadas();		
+			ce.addAll(this.barcos.get(i).hayCargasExplotadas());
 		}
+		int p = submarino.detectarDaño(ce);
+		puntos += p;
+		if (p>0)
+			System.out.println("Se ganan "+ p +" puntos");
+		
+		if (Math.divideExact(puntos, 500)> vidasExtra) {
+			submarino.sumarVidas(Math.divideExact(puntos, 500)-vidasExtra);
+			vidasExtra = Math.divideExact(puntos, 2);
+		}
+		
 	}
 
 	//-----------GESTIONAR NIVEL----------
@@ -81,7 +94,6 @@ public class JuegoSubmarino {
 		this.puntos +=200;
 		this.nivel +=1;
 		barcos.clear();
-		submarino.volverPosInicial();
 	}
 	
 	public void reiniciarJuego() {
@@ -122,6 +134,11 @@ public class JuegoSubmarino {
 	public int getAncho() {
 		return this.areaJuego.getAncho();
 	}
+
+	public int getPuntos() {
+		return this.puntos;
+	}
+	
 	
 
 }
