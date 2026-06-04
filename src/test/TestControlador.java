@@ -44,8 +44,6 @@ public class TestControlador {
 			
 			
 			//Test get infos
-			System.out.println("Ancho de area de juego =" +Controlador.getInstance().getAnchoArea());
-			System.out.println("Alto de area de juego =" +Controlador.getInstance().getAltoArea());
 			System.out.println("Nivel =" +Controlador.getInstance().getNivel());
 			System.out.println("Salud =" +Controlador.getInstance().getsaludRestante());
 			System.out.println("Vidas =" +Controlador.getInstance().getvidasRestantes());
