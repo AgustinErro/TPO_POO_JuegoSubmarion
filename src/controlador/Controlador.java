@@ -46,7 +46,7 @@ public class Controlador {
 	 public void procesosAutomaticos() {
 		 juego.moverEntidadesAutomaticas();
 		 juego.sincronizarSubmarino();
-		 
+		 juego.sincronizarNivel();
 	 }
 	 
 	 public int getAnchoArea() {
