@@ -1,27 +1,42 @@
 @startuml
 title R4 - Lanzamiento de Cargas de Profundidad
 
-participant Barco
-participant Random
-participant Area
-participant CargaProfundidad
-participant ContadorGlobal
+participant "barco:Barco" as barco
+participant "area:Area" as area
+participant "rng:Random" as rng
+participant "cg:ContadorGlobal" as cg
+create participant "carga:CargaProfundidad" as carga
 
-Barco -> Barco : moverBarco()
-Barco -> Area : estaDentroHorizontal(posX, ancho)
-Area --> Barco : true
-Barco -> Barco : dispararCarga()
-Barco -> Random : nextInt(1, limite)
-note right : limite = max(5, 10 - (nivel-1)/5)
-Random --> Barco : valor
+barco -> barco : 1: moverBarco()
+activate barco
 
-alt valor == 2
-    Barco -> CargaProfundidad : new CargaProfundidad(areaJuego, posX + ancho/2, posY, velocidad)
-    CargaProfundidad -> ContadorGlobal : registrarNuevaCarga()
-    ContadorGlobal --> CargaProfundidad : id
-    CargaProfundidad -> Random : nextInt(300, 701)
-    Random --> CargaProfundidad : profExplosion
-    CargaProfundidad --> Barco : nuevaCarga
-    Barco -> Barco : cargasDisparadas.add(nuevaCarga)
+barco -> area : 2: estaDentroHorizontal(posX, ancho)
+activate area
+area --> barco : true
+deactivate area
+
+barco -> barco : 3: dispararCarga()
+barco -> rng : 4: nextInt(1, limite)
+activate rng
+note right of rng : limite = max(5, 10 - (nivel-1)/5)
+rng --> barco : valor
+deactivate rng
+
+opt [valor == 2]
+    barco -> carga : <<create>>\n5: CargaProfundidad(areaJuego, posX+ancho/2, posY, velocidad)
+    activate carga
+    carga -> cg : 6: registrarNuevaCarga()
+    activate cg
+    cg --> carga : id
+    deactivate cg
+    carga -> rng : 7: nextInt(300, 701)
+    activate rng
+    rng --> carga : profExplosion
+    deactivate rng
+    carga --> barco
+    deactivate carga
+    barco -> barco : 8: cargasDisparadas.add(carga)
 end
+
+deactivate barco
 @enduml

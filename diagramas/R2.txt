@@ -1,28 +1,38 @@
 @startuml
 title R2 - Tráfico de Barcos (máx. 3 en pantalla)
 
-participant Controlador
-participant JuegoSubmarino
-participant "Barco 1" as B1
-participant "Barco 2" as B2
-participant "Barco 3" as B3
+participant "controlador:Controlador" as controlador
+participant "juego:JuegoSubmarino" as juego
+participant "b1:Barco" as b1
+participant "b2:Barco" as b2
+participant "b3:Barco" as b3
 
-note over JuegoSubmarino : Al iniciar: crea 3 barcos (máx en pantalla)
+note over juego : Al iniciar: crea 3 barcos (máx en pantalla)
 
-Controlador -> JuegoSubmarino : procesosAutomaticos()
-JuegoSubmarino -> B1 : moverBarco()
-JuegoSubmarino -> B2 : moverBarco()
-JuegoSubmarino -> B3 : moverBarco()
+controlador -> juego : 1: procesosAutomaticos()
+activate juego
 
-JuegoSubmarino -> JuegoSubmarino : sincronizarNivel()
-
-loop por cada barco (inverso)
-    JuegoSubmarino -> B1 : isInactivo()
-    B1 --> JuegoSubmarino : false
+loop [por cada barco]
+    juego -> b1 : 2: moverBarco()
+    activate b1
+    b1 --> juego
+    deactivate b1
 end
 
-alt barcos.isEmpty()
-    JuegoSubmarino -> JuegoSubmarino : pasarNivel()
+juego -> juego : 3: sincronizarNivel()
+
+loop [por cada barco, orden inverso]
+    juego -> b1 : 4: isInactivo()
+    activate b1
+    b1 --> juego : false
+    deactivate b1
+end
+
+opt [barcos.isEmpty()]
+    juego -> juego : 5: pasarNivel()
     note right : Se crean 3 barcos nuevos
 end
+
+juego --> controlador
+deactivate juego
 @enduml

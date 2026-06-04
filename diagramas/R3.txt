@@ -1,33 +1,43 @@
 @startuml
 title R3 - Generación Aleatoria de Barcos
 
-participant Barco
-participant Random
-participant Area
+participant "barco:Barco" as barco
+participant "rng:Random" as rng
+participant "area:Area" as area
 
-Barco -> Barco : posInicial()
-Barco -> Random : nextBoolean()
-Random --> Barco : direccion
+barco -> barco : 1: posInicial()
+activate barco
 
-alt direccion = true (izquierda a derecha)
-    Barco -> Barco : posX = -100
-else direccion = false (derecha a izquierda)
-    Barco -> Barco : posX = areaJuego.getAncho() + 1
+barco -> rng : 2: nextBoolean()
+activate rng
+rng --> barco : direccion
+deactivate rng
+
+alt [direccion = true]
+    barco -> barco : 3a: posX = -100
+else [direccion = false]
+    barco -> barco : 3b: posX = areaJuego.getAncho() + 1
 end
 
-Barco -> Random : nextInt(2, 10)
-Random --> Barco : esperar
+barco -> rng : 4: nextInt(2, 10)
+activate rng
+rng --> barco : esperar
+deactivate rng
+deactivate barco
 
-loop cada tick de movimiento
-    alt direccion = true
-        Barco -> Barco : moverDerecha()
-    else
-        Barco -> Barco : moverIzquierda()
+loop [cada tick de movimiento]
+    alt [direccion = true]
+        barco -> barco : 5a: moverDerecha()
+    else [direccion = false]
+        barco -> barco : 5b: moverIzquierda()
     end
-    Barco -> Area : estaDentroHorizontal(posX, ancho)
-    alt llegó al borde
-        Barco -> Barco : posInicial()
-        Barco -> Barco : viajes--
+    barco -> area : 6: estaDentroHorizontal(posX, ancho)
+    activate area
+    area --> barco : true / false
+    deactivate area
+    opt [llegó al borde]
+        barco -> barco : 7: posInicial()
+        barco -> barco : 8: viajes--
     end
 end
 @enduml

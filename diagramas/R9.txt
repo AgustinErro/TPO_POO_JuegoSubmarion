@@ -1,25 +1,39 @@
 @startuml
 title R9 - Incremento de Dificultad por Nivel
 
-participant JuegoSubmarino
-participant Barco
-participant CargaProfundidad
+participant "juego:JuegoSubmarino" as juego
+participant "barco:Barco" as barco
 
-JuegoSubmarino -> JuegoSubmarino : pasarNivel()
-JuegoSubmarino -> JuegoSubmarino : velocidadBarco = (int)(velocidadBarco * 1.2)
+== Al pasar de nivel ==
+
+juego -> juego : 1: pasarNivel()
+activate juego
+juego -> juego : 2: velocidadBarco = (int)(velocidadBarco * 1.2)
 note right : +20% de velocidad por nivel
 
-loop 3 veces
-    JuegoSubmarino -> Barco : new Barco(..., velocidadBarco, nivel)
-    note right : Barcos más rápidos
-    Barco --> JuegoSubmarino : nuevoBarco
+loop [3 veces]
+    juego -> barco : <<create>>\n3: Barco(areaJuego, 90, 30, velocidadBarco, nivel)
+    activate barco
+    note right : Barcos creados con mayor velocidad y nivel
+    barco --> juego
+    deactivate barco
 end
 
-note over Barco, CargaProfundidad : Al disparar, la carga hereda la velocidad del barco
-Barco -> CargaProfundidad : new CargaProfundidad(..., velocidad)
-note right : Caída más rápida a mayor nivel
+juego --> juego
+deactivate juego
 
-note over Barco : Probabilidad de disparo aumenta con el nivel
-Barco -> Barco : limite = max(5, 10 - (nivel-1)/5)
-note right : Desde 1/9 en nivel 1 hasta 1/4 en nivel 26+
+== Al disparar una carga ==
+
+create participant "carga:CargaProfundidad" as carga
+
+activate barco
+barco -> barco : 4: dispararCarga()
+barco -> barco : 5: limite = max(5, 10-(nivel-1)/5)
+note right : Probabilidad 1/(limite-1)\nDesde 1/9 (nivel 1) hasta 1/4 (nivel 26+)
+barco -> carga : <<create>>\n6: CargaProfundidad(..., velocidad)
+activate carga
+note right : La carga hereda la velocidad del barco
+carga --> barco
+deactivate carga
+deactivate barco
 @enduml

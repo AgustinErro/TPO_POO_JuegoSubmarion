@@ -1,23 +1,39 @@
 @startuml
 title R1 - Navegación del Submarino
 
-actor Jugador
-participant Controlador
-participant JuegoSubmarino
-participant Submarino
-participant Area
+actor "jugador:Jugador" as jugador
+participant "controlador:Controlador" as controlador
+participant "juego:JuegoSubmarino" as juego
+participant "sub:Submarino" as sub
+participant "area:Area" as area
 
-Jugador -> Controlador : moverDerechaSubmarino()
-Controlador -> JuegoSubmarino : terminarJuego()
-JuegoSubmarino -> Submarino : getVidas()
-Submarino --> JuegoSubmarino : vidas
-JuegoSubmarino --> Controlador : true
-Controlador -> JuegoSubmarino : moverDerecha()
-JuegoSubmarino -> Submarino : moverDerecha()
-Submarino -> Area : estaDentroHorizontal(nuevaX, ancho)
-Area --> Submarino : true / false
-alt dentro del área
-    Submarino -> Submarino : posX = nuevaX
+jugador -> controlador : 1: moverDerechaSubmarino()
+activate controlador
+
+controlador -> juego : 2: terminarJuego()
+activate juego
+juego -> sub : 3: getVidas()
+activate sub
+sub --> juego : vidas
+deactivate sub
+juego --> controlador : true
+deactivate juego
+
+controlador -> juego : 4: moverDerecha()
+activate juego
+juego -> sub : 5: moverDerecha()
+activate sub
+sub -> area : 6: estaDentroHorizontal(nuevaX, ancho)
+activate area
+area --> sub : true / false
+deactivate area
+
+opt [dentro del área]
+    sub -> sub : 7: posX = nuevaX
 end
-Submarino --> JuegoSubmarino : posX
+
+sub --> juego : posX
+deactivate sub
+deactivate juego
+deactivate controlador
 @enduml

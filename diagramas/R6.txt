@@ -1,43 +1,54 @@
 @startuml
 title R6 - Cálculo de Daño y Puntaje
 
-participant JuegoSubmarino
-participant Barco
-participant CargaProfundidad
-participant Submarino
+participant "juego:JuegoSubmarino" as juego
+participant "barco:Barco" as barco
+participant "carga:CargaProfundidad" as carga
+participant "sub:Submarino" as sub
 
-JuegoSubmarino -> JuegoSubmarino : sincronizarSubmarino()
+juego -> juego : 1: sincronizarSubmarino()
+activate juego
 
-loop por cada Barco
-    JuegoSubmarino -> Barco : hayCargasExplotadas()
-    loop por cada CargaProfundidad
-        Barco -> CargaProfundidad : isExploto()
-        CargaProfundidad --> Barco : true
-        Barco -> CargaProfundidad : getCentro()
-        CargaProfundidad --> Barco : [centroX, centroY]
-        Barco -> Barco : cargasDisparadas.remove(i)
+loop [por cada Barco]
+    juego -> barco : 2: hayCargasExplotadas()
+    activate barco
+    loop [por cada CargaProfundidad]
+        barco -> carga : 3: isExploto()
+        activate carga
+        carga --> barco : true
+        deactivate carga
+        barco -> carga : 4: getCentro()
+        activate carga
+        carga --> barco : [centroX, centroY]
+        deactivate carga
+        barco -> barco : 5: cargasDisparadas.remove(i)
     end
-    Barco --> JuegoSubmarino : centrosExplocion[]
+    barco --> juego : centrosExplocion[]
+    deactivate barco
 end
 
-JuegoSubmarino -> Submarino : detectarDano(centrosExplocion)
+juego -> sub : 6: detectarDano(centrosExplocion)
+activate sub
 
-loop por cada explosión
-    Submarino -> Submarino : distanciaAlBorde = sqrt(dx² + dy²)
-    alt distancia > 100
+loop [por cada explosión]
+    sub -> sub : 7: distanciaAlBorde = sqrt(dx² + dy²)
+    sub -> sub : 8: calcularDano(distancia)
+    alt [distancia > 100]
         note right : +30 puntos, sin daño
-    else distancia 51 a 100
+    else [distancia 51 a 100]
         note right : +10 puntos, -30 salud
-    else distancia 11 a 50
+    else [distancia 11 a 50]
         note right : -50 salud
-    else distancia <= 10
+    else [distancia <= 10]
         note right : -100 salud
     end
-    alt salud <= 0
-        Submarino -> Submarino : perderVida()
+    opt [salud <= 0]
+        sub -> sub : 9: perderVida()
     end
 end
 
-Submarino --> JuegoSubmarino : puntosGanados
-JuegoSubmarino -> JuegoSubmarino : puntos += puntosGanados
+sub --> juego : puntosGanados
+deactivate sub
+juego -> juego : 10: puntos += puntosGanados
+deactivate juego
 @enduml
