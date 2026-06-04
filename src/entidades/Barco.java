@@ -6,7 +6,7 @@ import java.util.Random;
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
 
-public class Barco extends EntdiadMovible implements moviminetoHorizontal {
+public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	
 	private ArrayList<CargaProfundidad> cargasDisparadas;
 	private int viajes;
@@ -28,7 +28,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	//----------Movimiento Barco-----------------------------
 	public void moverBarco() {
 		
-		this.moverCargas();
+		//this.moverCargas();
 		
 		if (viajes >= 0) {
 			
@@ -115,7 +115,7 @@ public class Barco extends EntdiadMovible implements moviminetoHorizontal {
 	public ArrayList<int[]> hayCargasExplotadas() {
 		ArrayList<int[]> centrosExplocion = new ArrayList<>();
 			
-		for (int i = 0; i < cargasDisparadas.size(); i++) {
+		for (int i = cargasDisparadas.size() - 1; i >= 0; i--) {
 			if (cargasDisparadas.get(i).isExploto()) {
 				int[] centroCarga = cargasDisparadas.get(i).getCentro();
 				centrosExplocion.add(centroCarga);

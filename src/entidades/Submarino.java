@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
 
-public class Submarino extends EntdiadMovible implements moviminetoHorizontal {
+public class Submarino extends EntidadMovible implements moviminetoHorizontal {
 
 	private int vidas;
 	private int salud;

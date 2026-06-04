@@ -5,7 +5,7 @@ import java.util.Random;
 import auxiliares.Area;
 import auxiliares.ContadorGlobal;
 
-public class CargaProfundidad extends EntdiadMovible{
+public class CargaProfundidad extends EntidadMovible{
 	
 	private int id;
 	private int profExplosion;
@@ -53,7 +53,7 @@ public class CargaProfundidad extends EntdiadMovible{
 	}
 
 	public int[] getCentro() {
-		int[] centro = {this.areaEntidad.getCentroX(),this.areaEntidad.getCentroY()};
+		int[] centro = { posX+this.areaEntidad.getCentroX(), posY+this.areaEntidad.getCentroY()};
 		return centro;
 	}
 	

@@ -75,9 +75,10 @@ public class JuegoSubmarino {
 		if (p>0)
 			System.out.println("Se ganan "+ p +" puntos");
 		
-		if (Math.divideExact(puntos, 500)> vidasExtra) {
-			submarino.sumarVidas(Math.divideExact(puntos, 500)-vidasExtra);
-			vidasExtra = Math.divideExact(puntos, 2);
+		int vidasPorPuntos = puntos / 500;
+		if (vidasPorPuntos > vidasExtra) {
+		    submarino.sumarVidas(vidasPorPuntos - vidasExtra);
+		    vidasExtra = vidasPorPuntos;
 		}
 		
 	}
