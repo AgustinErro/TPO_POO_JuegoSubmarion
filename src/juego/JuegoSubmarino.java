@@ -17,7 +17,7 @@ public class JuegoSubmarino {
 	private int puntos;
 	private int vidasExtra;
 	private int velocidadSubmarino = 10;
-	private int velocidadBarco = 5;
+	private int velocidadBarco = 50;
 	
 
 	
@@ -33,7 +33,7 @@ public class JuegoSubmarino {
 		//-----CREADOR DE BARCOS---------
 		this.barcos = new ArrayList<Barco>();
 		for (int i = 0; i < 3; i++) {
-			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco); 
+			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel); 
 			this.barcos.add(nuevoBarco);
 		}
 	}
@@ -102,7 +102,7 @@ public class JuegoSubmarino {
 		this.puntos +=200;
 		velocidadBarco = (int)(velocidadBarco * 1.2);
 		for (int i = 0; i < 3; i++) {
-			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco);
+			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel);
 			this.barcos.add(nuevoBarco);
 		}
 	}

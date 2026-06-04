@@ -12,13 +12,15 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	private int viajes;
 	private boolean direccion;
 	private int esperar;
+	private int nivel;
 
-	
-	public Barco(Area areaJuego, int ancho, int alto, int velocidad) {
+
+	public Barco(Area areaJuego, int ancho, int alto, int velocidad, int nivel) {
 		super(areaJuego, ancho, alto, velocidad);
 		
 		this.posY = 100;
 		this.viajes = 3;
+		this.nivel = nivel;
 
 		this.posInicial();
 		this.cargasDisparadas = new ArrayList<CargaProfundidad>();
@@ -97,7 +99,8 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		
 		Random random = new Random();
 		
-		if (random.nextInt(1, 7) == 2) {	
+		int limite = Math.max(5, 10 - (this.nivel - 1) / 5);
+		if (random.nextInt(1, limite) == 2) {
 			CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego, 10, 10, (Math.divideExact(this.areaEntidad.getAncho(), 2)+ this.posX)  , this.posY, this.velocidad);
 			this.cargasDisparadas.add(nuevaCarga);
 			System.out.println("Disparo carga "+ nuevaCarga.getId()+ " desde posicion X = " +(Math.divideExact(this.areaEntidad.getAncho(), 2) + this.posX));
