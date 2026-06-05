@@ -8,14 +8,12 @@ participant "sub:Submarino" as sub
 
 sub -> sub : 1: calcularDano(distancia)
 activate sub
-note right : salud <= 0
 sub -> sub : 2: perderVida()
 sub -> sub : 3: vidas--
-alt [vidas >= 0]
+alt [vidas vidas >= 0]
     sub -> sub : 4a: salud = 100
-else [vidas < 0]
+else [vidas vidas < 0]
     sub -> sub : 4b: salud = 0
-    note right : Game Over
 end
 deactivate sub
 
@@ -24,14 +22,13 @@ deactivate sub
 juego -> juego : 5: sincronizarSubmarino()
 activate juego
 juego -> juego : 6: vidasPorPuntos = puntos / 500
-opt [vidasPorPuntos > vidasExtra]
+opt [vidasPorPuntos vidasPorPuntos > vidasExtra]
     juego -> sub : 7: sumarVidas(vidasPorPuntos - vidasExtra)
     activate sub
     sub -> sub : 8: vidas += vidasExtra
     sub --> juego
     deactivate sub
     juego -> juego : 9: vidasExtra = vidasPorPuntos
-    note right : +1 vida cada 500 puntos
 end
 deactivate juego
 @enduml

@@ -8,10 +8,9 @@ participant "barco:Barco" as barco
 controlador -> juego : 1: sincronizarNivel()
 activate juego
 
-loop [por cada Barco, orden inverso]
+loop [por cada Barco]
     juego -> barco : 2: isInactivo()
     activate barco
-    note right : viajes == 0 && cargasDisparadas.isEmpty()
     barco --> juego : true
     deactivate barco
     juego -> juego : 3: barcos.remove(i)

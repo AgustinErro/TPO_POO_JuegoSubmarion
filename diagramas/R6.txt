@@ -31,18 +31,9 @@ juego -> sub : 6: detectarDano(centrosExplocion)
 activate sub
 
 loop [por cada explosión]
-    sub -> sub : 7: distanciaAlBorde = sqrt(dx² + dy²)
+    sub -> sub : 7: distanciaAlBorde
     sub -> sub : 8: calcularDano(distancia)
-    alt [distancia > 100]
-        note right : +30 puntos, sin daño
-    else [distancia 51 a 100]
-        note right : +10 puntos, -30 salud
-    else [distancia 11 a 50]
-        note right : -50 salud
-    else [distancia <= 10]
-        note right : -100 salud
-    end
-    opt [salud <= 0]
+    opt [salud salud <= 0]
         sub -> sub : 9: perderVida()
     end
 end

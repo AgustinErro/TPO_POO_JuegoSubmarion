@@ -16,7 +16,7 @@ juego -> sub : 3: getVidas()
 activate sub
 sub --> juego : vidas
 deactivate sub
-juego --> controlador : true
+juego --> controlador : false
 deactivate juego
 
 controlador -> juego : 4: moverDerecha()

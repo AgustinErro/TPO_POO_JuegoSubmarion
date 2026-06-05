@@ -5,7 +5,7 @@ participant "barco:Barco" as barco
 participant "area:Area" as area
 participant "rng:Random" as rng
 participant "cg:ContadorGlobal" as cg
-create participant "carga:CargaProfundidad" as carga
+participant "carga:CargaProfundidad" as carga
 
 barco -> barco : 1: moverBarco()
 activate barco
@@ -18,12 +18,11 @@ deactivate area
 barco -> barco : 3: dispararCarga()
 barco -> rng : 4: nextInt(1, limite)
 activate rng
-note right of rng : limite = max(5, 10 - (nivel-1)/5)
 rng --> barco : valor
 deactivate rng
 
-opt [valor == 2]
-    barco -> carga : <<create>>\n5: CargaProfundidad(areaJuego, posX+ancho/2, posY, velocidad)
+opt [valor valor == 2]
+    barco -> carga : 5: <<create>> CargaProfundidad(areaJuego, posX+ancho/2, posY, velocidad)
     activate carga
     carga -> cg : 6: registrarNuevaCarga()
     activate cg

@@ -21,7 +21,6 @@ loop [por cada CargaProfundidad]
         carga -> carga : 4: posY += velocidad
     else [posY >= profExplosion]
         carga -> carga : 5: exploto = true
-        note right : Explota entre profundidad 300 y 700
     end
 
     carga --> barco

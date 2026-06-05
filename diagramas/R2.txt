@@ -7,7 +7,6 @@ participant "b1:Barco" as b1
 participant "b2:Barco" as b2
 participant "b3:Barco" as b3
 
-note over juego : Al iniciar: crea 3 barcos (máx en pantalla)
 
 controlador -> juego : 1: procesosAutomaticos()
 activate juego
@@ -21,7 +20,7 @@ end
 
 juego -> juego : 3: sincronizarNivel()
 
-loop [por cada barco, orden inverso]
+loop [por cada barco]
     juego -> b1 : 4: isInactivo()
     activate b1
     b1 --> juego : false

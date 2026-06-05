@@ -3,36 +3,30 @@ title R9 - Incremento de Dificultad por Nivel
 
 participant "juego:JuegoSubmarino" as juego
 participant "barco:Barco" as barco
+participant "carga:CargaProfundidad" as carga
 
 == Al pasar de nivel ==
 
 juego -> juego : 1: pasarNivel()
 activate juego
-juego -> juego : 2: velocidadBarco = (int)(velocidadBarco * 1.2)
-note right : +20% de velocidad por nivel
 
-loop [3 veces]
-    juego -> barco : <<create>>\n3: Barco(areaJuego, 90, 30, velocidadBarco, nivel)
+
+loop [3 3 veces]
+    juego -> barco : 3: <<create>> Barco()
     activate barco
-    note right : Barcos creados con mayor velocidad y nivel
     barco --> juego
     deactivate barco
 end
 
-juego --> juego
 deactivate juego
 
 == Al disparar una carga ==
 
-create participant "carga:CargaProfundidad" as carga
-
 activate barco
 barco -> barco : 4: dispararCarga()
-barco -> barco : 5: limite = max(5, 10-(nivel-1)/5)
-note right : Probabilidad 1/(limite-1)\nDesde 1/9 (nivel 1) hasta 1/4 (nivel 26+)
-barco -> carga : <<create>>\n6: CargaProfundidad(..., velocidad)
+activate barco
+barco -> carga : 5: <<create>> CargaProfundidad()
 activate carga
-note right : La carga hereda la velocidad del barco
 carga --> barco
 deactivate carga
 deactivate barco
