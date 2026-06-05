@@ -1,28 +1,34 @@
 @startuml
 title R7 - Gestión de Vidas
 
-participant JuegoSubmarino
-participant Submarino
+participant "juego:JuegoSubmarino" as juego
+participant "sub:Submarino" as sub
 
 == Perder una vida ==
-Submarino -> Submarino : calcularDano(distancia)
-note right : salud <= 0
-Submarino -> Submarino : perderVida()
-Submarino -> Submarino : vidas--
-alt vidas >= 0
-    Submarino -> Submarino : salud = 100
-else vidas < 0
-    Submarino -> Submarino : salud = 0
-    note right : Game Over
+
+sub -> sub : 1: calcularDano(distancia)
+activate sub
+sub -> sub : 2: perderVida()
+sub -> sub : 3: vidas--
+alt [vidas vidas >= 0]
+    sub -> sub : 4a: salud = 100
+else [vidas vidas < 0]
+    sub -> sub : 4b: salud = 0
 end
+deactivate sub
 
 == Ganar una vida extra ==
-JuegoSubmarino -> JuegoSubmarino : sincronizarSubmarino()
-JuegoSubmarino -> JuegoSubmarino : vidasPorPuntos = puntos / 500
-alt vidasPorPuntos > vidasExtra
-    JuegoSubmarino -> Submarino : sumarVidas(vidasPorPuntos - vidasExtra)
-    Submarino -> Submarino : vidas += vidasExtra
-    JuegoSubmarino -> JuegoSubmarino : vidasExtra = vidasPorPuntos
-    note right : +1 vida cada 500 puntos
+
+juego -> juego : 5: sincronizarSubmarino()
+activate juego
+juego -> juego : 6: vidasPorPuntos = puntos / 500
+opt [vidasPorPuntos vidasPorPuntos > vidasExtra]
+    juego -> sub : 7: sumarVidas(vidasPorPuntos - vidasExtra)
+    activate sub
+    sub -> sub : 8: vidas += vidasExtra
+    sub --> juego
+    deactivate sub
+    juego -> juego : 9: vidasExtra = vidasPorPuntos
 end
+deactivate juego
 @enduml

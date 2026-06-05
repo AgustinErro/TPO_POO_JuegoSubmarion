@@ -1,27 +1,34 @@
 @startuml
 title R8 - Cambio de Nivel
 
-participant Controlador
-participant JuegoSubmarino
-participant Barco
+participant "controlador:Controlador" as controlador
+participant "juego:JuegoSubmarino" as juego
+participant "barco:Barco" as barco
 
-Controlador -> JuegoSubmarino : sincronizarNivel()
+controlador -> juego : 1: sincronizarNivel()
+activate juego
 
-loop por cada Barco (orden inverso)
-    JuegoSubmarino -> Barco : isInactivo()
-    note right : viajes == 0 && cargasDisparadas.isEmpty()
-    Barco --> JuegoSubmarino : true
-    JuegoSubmarino -> JuegoSubmarino : barcos.remove(i)
+loop [por cada Barco]
+    juego -> barco : 2: isInactivo()
+    activate barco
+    barco --> juego : true
+    deactivate barco
+    juego -> juego : 3: barcos.remove(i)
 end
 
-alt barcos.isEmpty()
-    JuegoSubmarino -> JuegoSubmarino : pasarNivel()
-    JuegoSubmarino -> JuegoSubmarino : nivel += 1
-    JuegoSubmarino -> JuegoSubmarino : puntos += 200
-    loop 3 veces
-        JuegoSubmarino -> Barco : new Barco(..., velocidadBarco, nivel)
-        Barco --> JuegoSubmarino : nuevoBarco
-        JuegoSubmarino -> JuegoSubmarino : barcos.add(nuevoBarco)
+opt [barcos.isEmpty()]
+    juego -> juego : 4: pasarNivel()
+    juego -> juego : 5: nivel += 1
+    juego -> juego : 6: puntos += 200
+    loop [3 veces]
+        juego -> barco : <<create>>\n7: Barco(areaJuego, 90, 30, velocidadBarco, nivel)
+        activate barco
+        barco --> juego
+        deactivate barco
+        juego -> juego : 8: barcos.add(barco)
     end
 end
+
+juego --> controlador
+deactivate juego
 @enduml
