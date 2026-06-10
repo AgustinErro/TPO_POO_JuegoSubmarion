@@ -100,7 +100,7 @@ public class JuegoSubmarino {
 	public void pasarNivel() {
 		this.nivel +=1;
 		this.puntos +=200;
-		velocidadBarco = (int)(velocidadBarco * 1.2);
+		velocidadBarco = ((int)(velocidadBarco * 1.2) <= 20 ) ? (int)(velocidadBarco * 1.2) : 20;
 		for (int i = 0; i < 3; i++) {
 			Barco nuevoBarco = new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel);
 			this.barcos.add(nuevoBarco);
