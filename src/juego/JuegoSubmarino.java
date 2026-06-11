@@ -17,7 +17,7 @@ public class JuegoSubmarino {
 	private int puntos;
 	private int vidasExtra;
 	private int velocidadSubmarino = 10;
-	private int velocidadBarco = 50;
+	private int velocidadBarco = 5;
 	
 
 	
@@ -122,11 +122,19 @@ public class JuegoSubmarino {
 	public ArrayList <MovimientoView> getBarcos() {
 		
 		ArrayList<MovimientoView> mv = new ArrayList<MovimientoView>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < this.barcos.size(); i++) {
 				mv.add(this.barcos.get(i).toView());
 			}
 		return mv;
 		
+	}
+	
+	public ArrayList<MovimientoView> getCargas() {
+		ArrayList<MovimientoView> mv = new ArrayList<>();
+		for (Barco barco : this.barcos) {
+			mv.addAll(barco.getCargasView());
+		}
+		return mv;
 	}
 
 	public MovimientoView getSubmarino() {

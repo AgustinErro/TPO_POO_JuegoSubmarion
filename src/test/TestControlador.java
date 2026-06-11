@@ -49,6 +49,7 @@ public class TestControlador {
 			System.out.println("Vidas =" +Controlador.getInstance().getvidasRestantes());
 			System.out.println("Puntos =" +Controlador.getInstance().getPuntos());
 			System.out.println();
+			
 
 
 	}

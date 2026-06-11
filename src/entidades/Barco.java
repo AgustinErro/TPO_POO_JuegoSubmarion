@@ -5,6 +5,7 @@ import java.util.Random;
 
 import auxiliares.Area;
 import interfaces.moviminetoHorizontal;
+import views.MovimientoView;
 
 public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	
@@ -55,7 +56,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		}
 		else {
 			int nuevaX = this.posX + this.velocidad;
-	        if (areaJuego.estaDentroHorizontal(nuevaX+100, (this.areaEntidad.getAncho()))) {
+	        if (areaJuego.estaDentroHorizontal(nuevaX+10+this.areaEntidad.getAncho(), (this.areaEntidad.getAncho()))) {
 	            this.posX = nuevaX;
 	        }
 	        else {
@@ -73,7 +74,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		}
         else {	
 			int nuevaX = this.posX - this.velocidad;
-	        if (areaJuego.estaDentroHorizontal(nuevaX, this.areaEntidad.getAncho()-100)) {
+	        if (areaJuego.estaDentroHorizontal(nuevaX, this.areaEntidad.getAncho()-(10+this.areaEntidad.getAncho()))) {
 	            this.posX = nuevaX;
 	        }
 	        else {
@@ -133,7 +134,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 
 	public boolean isInactivo() {
 
-		return (viajes == 0 && cargasDisparadas.isEmpty());
+		return (viajes < 0 && cargasDisparadas.isEmpty());
 	}
 
 	public int getViajes() {
@@ -144,6 +145,12 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	
 	//----------------------------------------------------
 	
-	
+	public ArrayList<MovimientoView> getCargasView() {
+		ArrayList<MovimientoView> views = new ArrayList<>();
+		for (CargaProfundidad carga : cargasDisparadas) {
+			views.add(carga.toView());
+		}
+		return views;
+	}
 
 }

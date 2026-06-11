@@ -81,6 +81,10 @@ public class Controlador {
 		return this.juego.getBarcos();
 	}
 	
+	public ArrayList<MovimientoView> getCargas() {
+		return this.juego.getCargas();
+	}
+	
 	public MovimientoView getSubmarino() {
 		return juego.getSubmarino();
 	}
