@@ -22,7 +22,7 @@ public class CargaProfundidad extends EntidadMovible{
 		this.exploto = false;
 		Random random = new Random();
 		
-		this.profExplosion = random.nextInt(300, 701);
+		this.profExplosion = random.nextInt(300, 701)+130;
 		}
 	
 	public void moverAbajo() {

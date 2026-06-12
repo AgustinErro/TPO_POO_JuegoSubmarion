@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,13 +13,14 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import controlador.Controlador;
 import views.MovimientoView;
 
-public class Ventana extends JFrame {
+public class VentanaTest extends JFrame {
 
 	private static final long serialVersionUID = -5360041225007601188L;
 
@@ -30,8 +33,11 @@ public class Ventana extends JFrame {
 	private JLabel lblNivel;
 	private JLabel lblSalud;
 	private JLabel lblVidas;
+	private JLabel lblPuntos;
+	//test viajes
+	private JLabel lblInfoViajes;
 
-	public Ventana() {
+	public VentanaTest() {
 		labelsBarcos = new ArrayList<>();
 		labelsCargas = new ArrayList<>();
 		
@@ -46,18 +52,44 @@ public class Ventana extends JFrame {
 	}
 	
 	private void configurar() {
+		// 1. Creamos un JPanel personalizado para renderizar el fondo dividido y las líneas de medición
+		JPanel panelFondo = new JPanel() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D g2d = (Graphics2D) g;
+				
+				// Dibujar el cielo (Blanco) desde Y = 0 hasta Y = 130 
+				g2d.setColor(Color.WHITE);
+				g2d.fillRect(0, 0, getWidth(), 130);
+				
+				// Dibujar el agua (Celeste) desde Y = 130 hacia abajo
+				g2d.setColor(new Color(135, 206, 235));
+				g2d.fillRect(0, 130, getWidth(), getHeight() - 130);
+				
+				// Dibujar línea sutil cada 100 píxeles a partir del inicio del agua (Y = 130)
+				g2d.setColor(new Color(100, 149, 237, 120)); 
+				
+				// Arrancamos en 130 (la superficie) y bajamos de a 100 píxeles
+				for (int y = 130; y < getHeight(); y += 100) {
+					g2d.drawLine(0, y, getWidth(), y);
+				}
+			}
+		};
+		
+		this.setContentPane(panelFondo);
+		
 		contenedor = this.getContentPane();
 		contenedor.setLayout(null);
-		contenedor.setBackground(new Color(135, 206, 235)); // Color celeste que simula el agua
 		
-		// Definimos una fuente llamativa para los datos numéricos
 		Font fuenteHUD = new Font("Arial", Font.BOLD, 16);
 
-		// Inicialización obteniendo los datos directamente del Controlador
 		lblNivel = new JLabel("Nivel: " + Controlador.getInstance().getNivel());
 		lblNivel.setBounds(20, 20, 120, 30);
 		lblNivel.setFont(fuenteHUD);
-		lblNivel.setForeground(Color.BLACK);
+		lblNivel.setForeground(Color.BLACK); 
 		contenedor.add(lblNivel);
 
 		lblSalud = new JLabel("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
@@ -72,7 +104,21 @@ public class Ventana extends JFrame {
 		lblVidas.setForeground(Color.BLACK);
 		contenedor.add(lblVidas);
 		
-		// Inicializamos gráficamente el submarino
+		lblPuntos = new JLabel("Puntos: " + Controlador.getInstance().getPuntos());
+		lblPuntos.setBounds(480, 20, 200, 30);
+		lblPuntos.setFont(fuenteHUD);
+		lblPuntos.setForeground(Color.BLACK);
+		contenedor.add(lblPuntos);
+		
+		//test viajes
+		lblInfoViajes = new JLabel("");
+		// Lo ubicamos a la derecha (X=500), en el cielo (Y=20) y le damos suficiente alto (100) para las 3 líneas
+		lblInfoViajes.setBounds(700, 20, 200, 100); 
+		lblInfoViajes.setFont(new Font("Arial", Font.BOLD, 14));
+		lblInfoViajes.setForeground(Color.BLACK);
+		lblInfoViajes.setVerticalAlignment(SwingConstants.TOP); // Alineamos arriba para que crezca hacia abajo
+		contenedor.add(lblInfoViajes);
+		
 		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
 		submarino = new JLabel("Submarino");
 		submarino.setHorizontalAlignment(SwingConstants.CENTER);
@@ -133,6 +179,7 @@ public class Ventana extends JFrame {
 		lblNivel.setText("Nivel: " + Controlador.getInstance().getNivel());
 		lblSalud.setText("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
 		lblVidas.setText("Vidas: " + Controlador.getInstance().getvidasRestantes());
+		lblPuntos.setText("Puntos: " + Controlador.getInstance().getPuntos());
 
 		// 1. Actualizar posición del Submarino
 		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
@@ -141,11 +188,25 @@ public class Ventana extends JFrame {
 		// 2. Actualizar posiciones de los Barcos
 		ArrayList<MovimientoView> vistasBarcos = Controlador.getInstance().getBarcos();
 		gestionarLabelsDinámicos(labelsBarcos, vistasBarcos.size(), Color.GREEN, "Barco");
+		
+		//testViajes
+		StringBuilder listadoViajes = new StringBuilder("<html>");
+		
 		for (int i = 0; i < vistasBarcos.size(); i++) {
 			MovimientoView v = vistasBarcos.get(i);
 			labelsBarcos.get(i).setBounds(v.getPosicionX(), v.getPosicionY(), v.getAncho(), v.getAlto());
 			labelsBarcos.get(i).setText("Barco " + (i + 1));
+			labelsBarcos.get(i).setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 2));
+			
+			//test viajes
+			int viajesRestantes = v.getViajes() + 1;
+			listadoViajes.append("Barco ").append(i + 1).append(" = viaje ").append(viajesRestantes).append("<br>");
+			
 		}
+		
+		//test viajes
+		listadoViajes.append("</html>");
+		lblInfoViajes.setText(listadoViajes.toString());
 		
 		// 3. Actualizar posiciones de las Cargas
 		ArrayList<MovimientoView> vistasCargas = Controlador.getInstance().getCargas();

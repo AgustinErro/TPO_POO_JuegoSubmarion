@@ -56,7 +56,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		}
 		else {
 			int nuevaX = this.posX + this.velocidad;
-	        if (areaJuego.estaDentroHorizontal(nuevaX+10+this.areaEntidad.getAncho(), (this.areaEntidad.getAncho()))) {
+	        if (nuevaX < 0 ||areaJuego.estaDentroHorizontal(nuevaX, 0)) {
 	            this.posX = nuevaX;
 	        }
 	        else {
@@ -74,7 +74,7 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		}
         else {	
 			int nuevaX = this.posX - this.velocidad;
-	        if (areaJuego.estaDentroHorizontal(nuevaX, this.areaEntidad.getAncho()-(10+this.areaEntidad.getAncho()))) {
+	        if (nuevaX+this.areaEntidad.getAncho() > areaJuego.getAncho() || areaJuego.estaDentroHorizontal(nuevaX+this.areaEntidad.getAncho(), 0)) {
 	            this.posX = nuevaX;
 	        }
 	        else {
@@ -88,8 +88,9 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 	public void posInicial() {
 		Random random = new Random();
     	this.direccion = random.nextBoolean();
-    	this.posX = ((this.direccion) ? -100 : areaJuego.getAncho()+1);;
-		this.esperar = random.nextInt(2, 10);
+    	this.posX = ((this.direccion) ? -this.areaEntidad.getAncho() : areaJuego.getAncho());;
+    	Random random2 = new Random();
+		this.esperar = random2.nextInt(1, 300);
 		
 	}
 	
@@ -151,6 +152,13 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 			views.add(carga.toView());
 		}
 		return views;
+	}
+	
+	@Override
+	public MovimientoView toView() {
+		MovimientoView mv = super.toView();
+		mv.setViajes(this.viajes);
+		return mv;
 	}
 
 }

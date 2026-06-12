@@ -5,7 +5,8 @@ public class MovimientoView {
     private int posX;
     private int posY;
     private int ancho;
-    private int alto;	
+    private int alto;
+    private int viajes;
     
     public MovimientoView() {}
 
@@ -15,6 +16,8 @@ public class MovimientoView {
 		this.ancho = ancho;
 		this.alto = alto;
 	}
+	
+	
 
 	public int getPosicionX() {
 		return posX;
@@ -53,6 +56,13 @@ public class MovimientoView {
 		return "MovimientoView [posicionX=" + posX + ", posicionY=" + posY + "]";
 	}
 	
+	public int getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(int viajes) {
+		this.viajes = viajes;
+	}
 	
 	
 }
