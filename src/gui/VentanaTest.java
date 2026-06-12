@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -35,7 +36,7 @@ public class VentanaTest extends JFrame {
 	private JLabel lblVidas;
 	private JLabel lblPuntos;
 	//test viajes
-	private JLabel lblInfoViajes;
+	private JTextArea txtInfoViajes;
 
 	public VentanaTest() {
 		labelsBarcos = new ArrayList<>();
@@ -111,13 +112,15 @@ public class VentanaTest extends JFrame {
 		contenedor.add(lblPuntos);
 		
 		//test viajes
-		lblInfoViajes = new JLabel("");
+		txtInfoViajes = new JTextArea();
 		// Lo ubicamos a la derecha (X=500), en el cielo (Y=20) y le damos suficiente alto (100) para las 3 líneas
-		lblInfoViajes.setBounds(700, 20, 200, 100); 
-		lblInfoViajes.setFont(new Font("Arial", Font.BOLD, 14));
-		lblInfoViajes.setForeground(Color.BLACK);
-		lblInfoViajes.setVerticalAlignment(SwingConstants.TOP); // Alineamos arriba para que crezca hacia abajo
-		contenedor.add(lblInfoViajes);
+		txtInfoViajes.setBounds(700, 20, 200, 100); 
+		txtInfoViajes.setFont(new Font("Arial", Font.BOLD, 14));
+		txtInfoViajes.setForeground(Color.BLACK);
+		txtInfoViajes.setOpaque(false);
+		txtInfoViajes.setEditable(false);
+		txtInfoViajes.setFocusable(false);
+		contenedor.add(txtInfoViajes);
 		
 		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
 		submarino = new JLabel("Submarino");
@@ -175,22 +178,22 @@ public class VentanaTest extends JFrame {
 	}
 	
 	private void actualizarPantalla() {
-		// Actualizar los textos de los indicadores consultando al Controlador
+		// Actualizar los textos info
 		lblNivel.setText("Nivel: " + Controlador.getInstance().getNivel());
 		lblSalud.setText("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
 		lblVidas.setText("Vidas: " + Controlador.getInstance().getvidasRestantes());
 		lblPuntos.setText("Puntos: " + Controlador.getInstance().getPuntos());
 
-		// 1. Actualizar posición del Submarino
+		// Actualizar posición del Submarino
 		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
 		submarino.setBounds(auxSubmarino.getPosicionX(), auxSubmarino.getPosicionY(), auxSubmarino.getAncho(), auxSubmarino.getAlto());
 		
-		// 2. Actualizar posiciones de los Barcos
+		//Actualizar posiciones de los Barcos
 		ArrayList<MovimientoView> vistasBarcos = Controlador.getInstance().getBarcos();
 		gestionarLabelsDinámicos(labelsBarcos, vistasBarcos.size(), Color.GREEN, "Barco");
 		
 		//testViajes
-		StringBuilder listadoViajes = new StringBuilder("<html>");
+		StringBuilder listadoViajes = new StringBuilder();
 		
 		for (int i = 0; i < vistasBarcos.size(); i++) {
 			MovimientoView v = vistasBarcos.get(i);
@@ -200,13 +203,12 @@ public class VentanaTest extends JFrame {
 			
 			//test viajes
 			int viajesRestantes = v.getViajes() + 1;
-			listadoViajes.append("Barco ").append(i + 1).append(" = viaje ").append(viajesRestantes).append("<br>");
-			
+			listadoViajes.append("Barco ").append(i + 1).append(" = viaje ").append(viajesRestantes).append("\n");
+
 		}
 		
 		//test viajes
-		listadoViajes.append("</html>");
-		lblInfoViajes.setText(listadoViajes.toString());
+		txtInfoViajes.setText(listadoViajes.toString());
 		
 		// 3. Actualizar posiciones de las Cargas
 		ArrayList<MovimientoView> vistasCargas = Controlador.getInstance().getCargas();
