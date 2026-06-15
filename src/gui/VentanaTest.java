@@ -53,7 +53,7 @@ public class VentanaTest extends JFrame {
 	}
 	
 	private void configurar() {
-		// 1. Creamos un JPanel personalizado para renderizar el fondo dividido y las líneas de medición
+		// JPanel fondo
 		JPanel panelFondo = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
@@ -86,42 +86,41 @@ public class VentanaTest extends JFrame {
 		contenedor.setLayout(null);
 		
 		Font fuenteHUD = new Font("Arial", Font.BOLD, 16);
-
+		//Nivel
 		lblNivel = new JLabel("Nivel: " + Controlador.getInstance().getNivel());
 		lblNivel.setBounds(20, 20, 120, 30);
 		lblNivel.setFont(fuenteHUD);
 		lblNivel.setForeground(Color.BLACK); 
 		contenedor.add(lblNivel);
-
+		//Salud
 		lblSalud = new JLabel("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
 		lblSalud.setBounds(160, 20, 150, 30);
 		lblSalud.setFont(fuenteHUD);
 		lblSalud.setForeground(Color.BLACK);
 		contenedor.add(lblSalud);
-
+		//Vidas restantes
 		lblVidas = new JLabel("Vidas: " + Controlador.getInstance().getvidasRestantes());
 		lblVidas.setBounds(330, 20, 120, 30);
 		lblVidas.setFont(fuenteHUD);
 		lblVidas.setForeground(Color.BLACK);
 		contenedor.add(lblVidas);
-		
+		// Puntos
 		lblPuntos = new JLabel("Puntos: " + Controlador.getInstance().getPuntos());
 		lblPuntos.setBounds(480, 20, 200, 30);
 		lblPuntos.setFont(fuenteHUD);
 		lblPuntos.setForeground(Color.BLACK);
 		contenedor.add(lblPuntos);
 		
-		//test viajes
+		//Viajes por barcos
 		txtInfoViajes = new JTextArea();
-		// Lo ubicamos a la derecha (X=500), en el cielo (Y=20) y le damos suficiente alto (100) para las 3 líneas
-		txtInfoViajes.setBounds(700, 20, 200, 100); 
+		txtInfoViajes.setBounds(700, 20, 200, 50); 
 		txtInfoViajes.setFont(new Font("Arial", Font.BOLD, 14));
 		txtInfoViajes.setForeground(Color.BLACK);
-		txtInfoViajes.setOpaque(false);
-		txtInfoViajes.setEditable(false);
+		txtInfoViajes.setEditable(true);
 		txtInfoViajes.setFocusable(false);
 		contenedor.add(txtInfoViajes);
 		
+		//Submarino
 		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
 		submarino = new JLabel("Submarino");
 		submarino.setHorizontalAlignment(SwingConstants.CENTER);
@@ -135,6 +134,7 @@ public class VentanaTest extends JFrame {
 	private void eventos() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		//KeyListener para el movimiento del submarino
 		this.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) { }
@@ -155,7 +155,7 @@ public class VentanaTest extends JFrame {
 			}
 		});
 		
-		// Bucle principal del juego (Game Loop) configurado a 30 milisegundos
+		// Game Loop configurado a 30 milisegundos
 		Timer gameLoop = new Timer(30, new MuevoEntidadesAutomaticas());
 		gameLoop.start();
 	}
@@ -192,7 +192,7 @@ public class VentanaTest extends JFrame {
 		ArrayList<MovimientoView> vistasBarcos = Controlador.getInstance().getBarcos();
 		gestionarLabelsDinámicos(labelsBarcos, vistasBarcos.size(), Color.GREEN, "Barco");
 		
-		//testViajes
+		//StringBuilder para los textos info de viajes
 		StringBuilder listadoViajes = new StringBuilder();
 		
 		for (int i = 0; i < vistasBarcos.size(); i++) {
@@ -201,16 +201,16 @@ public class VentanaTest extends JFrame {
 			labelsBarcos.get(i).setText("Barco " + (i + 1));
 			labelsBarcos.get(i).setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK, 2));
 			
-			//test viajes
+			//append de todos los viajes barcos en un solo string
 			int viajesRestantes = v.getViajes() + 1;
 			listadoViajes.append("Barco ").append(i + 1).append(" = viaje ").append(viajesRestantes).append("\n");
 
 		}
 		
-		//test viajes
+		//Actualizar los textos info de viajes
 		txtInfoViajes.setText(listadoViajes.toString());
 		
-		// 3. Actualizar posiciones de las Cargas
+		// Actualizar posiciones de las Cargas
 		ArrayList<MovimientoView> vistasCargas = Controlador.getInstance().getCargas();
 		gestionarLabelsDinámicos(labelsCargas, vistasCargas.size(), Color.RED, "Carga");
 		for (int i = 0; i < vistasCargas.size(); i++) {
@@ -218,10 +218,11 @@ public class VentanaTest extends JFrame {
 			labelsCargas.get(i).setBounds(v.getPosicionX(), v.getPosicionY(), v.getAncho(), v.getAlto());
 		}
 
-		// Redibujar el contenedor para procesar altas y bajas de componentes de interfaz
+		// Redibujar el contenedor para procesar cambios
 		contenedor.repaint();
 	}
 	
+	//inner class para AccionListener de GameLoop
 	class MuevoEntidadesAutomaticas implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
