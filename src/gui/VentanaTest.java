@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -226,8 +227,44 @@ public class VentanaTest extends JFrame {
 	class MuevoEntidadesAutomaticas implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			//Controlador ejecuta los movimientos automáticos
 			Controlador.getInstance().procesosAutomaticos();
+			
+			// Actualiza los gráficos en la pantalla
 			actualizarPantalla();
+			
+			// Ver si se termina el juego
+			if (Controlador.getInstance().getTerminoJuego()) {
+				
+				Timer timer = (Timer) e.getSource();
+				timer.stop(); //Para el game loop
+				
+				int puntosFinales = Controlador.getInstance().getPuntos();
+				String mensaje = "¡FIN DEL JUEGO!\n\nEl submarino ha sido destruido.\nPuntuación Final: " + puntosFinales + " puntos.";
+				
+				// 2. Definimos los textos de nuestros botones en un arreglo
+				Object[] opciones = {"Volver a jugar", "Salir"};
+				
+				// 3. Mostramos el cartel interactivo y guardamos la respuesta del usuario
+				int seleccion = JOptionPane.showOptionDialog(
+					null,                  // null para centrar en pantalla
+					mensaje,               // El texto
+					"Game Over",           // El título
+					JOptionPane.YES_NO_OPTION,      // Tipo de opciones
+					JOptionPane.INFORMATION_MESSAGE,// Icono
+					null,                  // Sin icono personalizado
+					opciones,              // Nuestros botones
+					opciones[0]            // Botón seleccionado por defecto ("Volver a jugar")
+				);
+				
+				// 4. Evaluamos qué botón tocó el usuario
+				if (seleccion == JOptionPane.YES_OPTION) {
+					Controlador.getInstance().reiniciarJuego(); // Reinicia el juego
+					timer.start(); // Vuelve a arrancar el GameLoop
+				} else {
+					System.exit(0); 
+				}
+			}
 		}
 	}
 }

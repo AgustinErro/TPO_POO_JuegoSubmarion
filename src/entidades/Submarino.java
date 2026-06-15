@@ -13,8 +13,7 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
 	
 	public Submarino(Area areaJuego, int ancho, int alto, int velocidad) {
 		super(areaJuego, ancho, alto, velocidad);
-		this.posX = Math.divideExact(areaJuego.getAncho(), 2);
-		this.posY = Math.divideExact(areaJuego.getAlto(), 2);
+		this.setPosInicial();
 		this.salud = 100;
 		this.vidas = 3;
 		this.velocidad = velocidad;
@@ -64,6 +63,12 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
             posY = nuevaY;
         }
         return posY;
+    }
+    
+    public void setPosInicial() {
+    	this.posX = Math.divideExact(areaJuego.getAncho(), 2);
+		this.posY = Math.divideExact(areaJuego.getAlto(), 2);
+
     }
 
   //---------DAÑO-------------------------------------------------------------  

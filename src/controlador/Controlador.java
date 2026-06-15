@@ -77,6 +77,14 @@ public class Controlador {
 		return this.juego.saludRestante();
 	}
 	
+	public boolean getTerminoJuego() {
+		return juego.terminarJuego();
+	}
+	
+	public void reiniciarJuego() {
+		this.juego.reiniciarJuego();
+	}
+	
 	public ArrayList <MovimientoView> getBarcos(){
 		return this.juego.getBarcos();
 	}

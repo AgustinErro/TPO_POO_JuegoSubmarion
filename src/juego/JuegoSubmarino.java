@@ -84,7 +84,7 @@ public class JuegoSubmarino {
 	
 	public void sincronizarNivel() {
 		
-		if(barcos.isEmpty()) {
+		if(barcos.isEmpty()&& (puntos != 0)) {
 			this.pasarNivel();
 		}
 		else {
@@ -115,6 +115,17 @@ public class JuegoSubmarino {
 		else {
 			return false;
 		}
+	}
+	
+	public void reiniciarJuego() {
+		this.barcos.clear();
+		this.nivel = 0;
+		this.pasarNivel();
+		this.puntos = 0;
+		submarino.sumarVidas(4);
+		submarino.setPosInicial();
+		
+		this.velocidadBarco = 5;
 	}
 		
 	//---------------------------------------
