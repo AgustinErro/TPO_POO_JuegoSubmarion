@@ -237,32 +237,32 @@ public class VentanaTest extends JFrame {
 			if (Controlador.getInstance().getTerminoJuego()) {
 				
 				Timer timer = (Timer) e.getSource();
-				timer.stop(); //Para el game loop
+				timer.stop(); //Parar el game loop
 				
 				int puntosFinales = Controlador.getInstance().getPuntos();
 				String mensaje = "¡FIN DEL JUEGO!\n\nEl submarino ha sido destruido.\nPuntuación Final: " + puntosFinales + " puntos.";
 				
-				// 2. Definimos los textos de nuestros botones en un arreglo
+				// Textos  botones 
 				Object[] opciones = {"Volver a jugar", "Salir"};
 				
-				// 3. Mostramos el cartel interactivo y guardamos la respuesta del usuario
+				// Cartel de GAME OVER 
 				int seleccion = JOptionPane.showOptionDialog(
 					null,                  // null para centrar en pantalla
 					mensaje,               // El texto
-					"Game Over",           // El título
+					"GAME OVER",           // El título
 					JOptionPane.YES_NO_OPTION,      // Tipo de opciones
-					JOptionPane.INFORMATION_MESSAGE,// Icono
+					JOptionPane.WARNING_MESSAGE,// Icono
 					null,                  // Sin icono personalizado
 					opciones,              // Nuestros botones
-					opciones[0]            // Botón seleccionado por defecto ("Volver a jugar")
+					opciones[0]            // Botón seleccionado por defecto ("Volver a jugar")*/
 				);
 				
-				// 4. Evaluamos qué botón tocó el usuario
+				// if de opciones de cartel
 				if (seleccion == JOptionPane.YES_OPTION) {
 					Controlador.getInstance().reiniciarJuego(); // Reinicia el juego
 					timer.start(); // Vuelve a arrancar el GameLoop
 				} else {
-					System.exit(0); 
+					System.exit(0); //se cierra todo.
 				}
 			}
 		}

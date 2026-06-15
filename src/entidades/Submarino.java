@@ -128,7 +128,7 @@ public class Submarino extends EntidadMovible implements moviminetoHorizontal {
     private void perderVida() {
     	System.out.println("Se pierde una vida");
     	this.vidas--;
-        if(vidas>=0) 
+        if(vidas>0) 
         	this.salud = 100;
         else {
         	this.salud = 0;

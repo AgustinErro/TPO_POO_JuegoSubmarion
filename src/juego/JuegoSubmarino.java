@@ -108,7 +108,7 @@ public class JuegoSubmarino {
 	}
 	
 	public boolean terminarJuego() {
-		if (submarino.getVidas() < 0) {
+		if (submarino.getVidas() < 1) {
 			System.out.println("Se termina el juego");
 			return true;
 		}
@@ -122,7 +122,7 @@ public class JuegoSubmarino {
 		this.nivel = 0;
 		this.pasarNivel();
 		this.puntos = 0;
-		submarino.sumarVidas(4);
+		submarino.sumarVidas(3);
 		submarino.setPosInicial();
 		
 		this.velocidadBarco = 5;
