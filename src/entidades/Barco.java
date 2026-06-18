@@ -20,7 +20,7 @@ public class Barco extends EntidadMovible implements movimientoHorizontal {
 		super(areaJuego, ancho, alto, velocidad);
 		
 		this.posY = 100;
-		this.viajes = 3;
+		this.viajes = 0;
 		this.nivel = nivel;
 
 		this.posInicial();
