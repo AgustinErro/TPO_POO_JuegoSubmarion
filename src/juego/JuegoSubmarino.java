@@ -18,9 +18,9 @@ public class JuegoSubmarino {
 	private int vidasExtra;
 	private int velocidadSubmarino = 10;
 	private int velocidadBarco = 5;
-	private int barcosPendientes = 0; // Barcos que todavía no entraron a pantalla
-	private static final int BARCOS_TOTALES = 12;     // Total de barcos por nivel (antes eran 3 barcos x 4 cruces)
-	private static final int BARCOS_EN_PANTALLA = 3;  // Máximo de barcos visibles al mismo tiempo
+	private int barcosPendientes = 0; // Barcos que todavía no entraron a pantalla!
+	private static final int BARCOS_TOTALES = 12;     // Total de barcos por nivel (antes eran 3 barcos x 4 cruces)!
+	private static final int BARCOS_EN_PANTALLA = 3;  // Máximo de barcos visibles al mismo tiempo!
 	private ArrayList<int[]> explosionesRecientes = new ArrayList<>();
 
 
@@ -35,7 +35,7 @@ public class JuegoSubmarino {
 		this.submarino = new Submarino(areaJuego, 90, 30, velocidadSubmarino);
 
 		//-----CREADOR DE BARCOS---------
-		// Se crean solo 3 barcos activos; el resto espera en barcosPendientes
+		// Se crean solo 3 barcos activos; el resto espera en barcosPendientes!
 		this.barcos = new ArrayList<Barco>();
 		for (int i = 0; i < BARCOS_EN_PANTALLA; i++) {
 			this.barcos.add(new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel));
@@ -92,14 +92,14 @@ public class JuegoSubmarino {
 		for (int i = barcos.size() - 1; i >= 0; i--) {
 			if (barcos.get(i).isInactivo()) {
 				barcos.remove(i);
-				// Cuando un barco termina su cruce, entra el siguiente de la cola
+				// Cuando un barco termina su cruce, entra el siguiente de la cola!
 				if (barcosPendientes > 0) {
 					barcos.add(new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel));
 					barcosPendientes--;
 				}
 			}
 		}
-		// El nivel termina cuando no quedan barcos activos ni pendientes
+		// El nivel termina cuando no quedan barcos activos ni pendientes!
 		if (barcos.isEmpty() && barcosPendientes == 0 && puntos != 0) {
 			this.pasarNivel();
 		}
@@ -110,7 +110,7 @@ public class JuegoSubmarino {
 		this.nivel +=1;
 		this.puntos +=200;
 		velocidadBarco = ((int)(velocidadBarco * 1.2) <= 20 ) ? (int)(velocidadBarco * 1.2) : 20;
-		// Inicia el nuevo nivel con 3 barcos en pantalla y 9 en cola
+		// Inicia el nuevo nivel con 3 barcos en pantalla y 9 en cola!
 		for (int i = 0; i < BARCOS_EN_PANTALLA; i++) {
 			this.barcos.add(new Barco(areaJuego, 90, 30, velocidadBarco, this.nivel));
 		}
@@ -143,7 +143,7 @@ public class JuegoSubmarino {
 		submarino.setPosInicial();
 
 		this.velocidadBarco = 5;
-		this.barcosPendientes = 0; // pasarNivel() dentro de reiniciar lo recarga correctamente
+		this.barcosPendientes = 0; // pasarNivel() dentro de reiniciar lo recarga correctamente!
 	}
 		
 	//---------------------------------------

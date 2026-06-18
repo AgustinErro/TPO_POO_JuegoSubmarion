@@ -20,7 +20,7 @@ public class Barco extends EntidadMovible implements movimientoHorizontal {
 		super(areaJuego, ancho, alto, velocidad);
 		
 		this.posY = 100;
-		this.viajes = 0; // Cada barco cruza la pantalla una sola vez (antes era 3 cruces)
+		this.viajes = 0; // Cada barco cruza la pantalla una sola vez (antes era 3 cruces)!
 		this.nivel = nivel;
 
 		this.posInicial();
