@@ -30,6 +30,7 @@ public class VentanaTest extends JFrame {
 
 	private static final int DURACION_EXPLOSION = 20;
 
+	private Controlador controlador;
 	private JLabel submarino;
 	private ArrayList<JLabel> labelsBarcos;
 	private ArrayList<JLabel> labelsCargas;
@@ -44,17 +45,18 @@ public class VentanaTest extends JFrame {
 	//test viajes
 	private JTextArea txtInfoViajes;
 
-	public VentanaTest() {
+	public VentanaTest(Controlador controlador) {
+		this.controlador = controlador;
 		labelsBarcos = new ArrayList<>();
 		labelsCargas = new ArrayList<>();
-		
+
 		configurar();
 		this.setVisible(true);
-		int ancho = Controlador.getInstance().getAnchoArea();
-		int alto = Controlador.getInstance().getAltoArea();
+		int ancho = controlador.getAnchoArea();
+		int alto = controlador.getAltoArea();
 		this.setSize(ancho, alto);
 		this.setTitle("Objetos Moviles - Juego Submarino");
-		this.setLocationRelativeTo(null); // Centra la ventana en pantalla
+		this.setLocationRelativeTo(null);
 		eventos();
 	}
 	
@@ -120,25 +122,25 @@ public class VentanaTest extends JFrame {
 		
 		Font fuenteHUD = new Font("Arial", Font.BOLD, 16);
 		//Nivel
-		lblNivel = new JLabel("Nivel: " + Controlador.getInstance().getNivel());
+		lblNivel = new JLabel("Nivel: " + controlador.getNivel());
 		lblNivel.setBounds(20, 20, 120, 30);
 		lblNivel.setFont(fuenteHUD);
 		lblNivel.setForeground(Color.BLACK); 
 		contenedor.add(lblNivel);
 		//Salud
-		lblSalud = new JLabel("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
+		lblSalud = new JLabel("Salud: " + controlador.getsaludRestante() + "%");
 		lblSalud.setBounds(160, 20, 150, 30);
 		lblSalud.setFont(fuenteHUD);
 		lblSalud.setForeground(Color.BLACK);
 		contenedor.add(lblSalud);
 		//Vidas restantes
-		lblVidas = new JLabel("Vidas: " + Controlador.getInstance().getvidasRestantes());
+		lblVidas = new JLabel("Vidas: " + controlador.getvidasRestantes());
 		lblVidas.setBounds(330, 20, 120, 30);
 		lblVidas.setFont(fuenteHUD);
 		lblVidas.setForeground(Color.BLACK);
 		contenedor.add(lblVidas);
 		// Puntos
-		lblPuntos = new JLabel("Puntos: " + Controlador.getInstance().getPuntos());
+		lblPuntos = new JLabel("Puntos: " + controlador.getPuntos());
 		lblPuntos.setBounds(480, 20, 200, 30);
 		lblPuntos.setFont(fuenteHUD);
 		lblPuntos.setForeground(Color.BLACK);
@@ -154,7 +156,7 @@ public class VentanaTest extends JFrame {
 		contenedor.add(txtInfoViajes);
 		
 		//Submarino
-		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
+		MovimientoView auxSubmarino = controlador.getSubmarino();
 		submarino = new JLabel("Submarino");
 		submarino.setHorizontalAlignment(SwingConstants.CENTER);
 		submarino.setForeground(Color.WHITE);
@@ -178,13 +180,13 @@ public class VentanaTest extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == 37)
-					Controlador.getInstance().moverIzquierdaSubmarino();
+					controlador.moverIzquierdaSubmarino();
 				else if(e.getKeyCode() == 38)
-					Controlador.getInstance().moverArribaSubmarino();
+					controlador.moverArribaSubmarino();
 				else if(e.getKeyCode() == 39)
-					Controlador.getInstance().moverDerechaSubmarino();
+					controlador.moverDerechaSubmarino();
 				else if(e.getKeyCode() == 40)
-					Controlador.getInstance().moverAbajoSubmarino();
+					controlador.moverAbajoSubmarino();
 			}
 		});
 		
@@ -212,17 +214,17 @@ public class VentanaTest extends JFrame {
 	
 	private void actualizarPantalla() {
 		// Actualizar los textos info
-		lblNivel.setText("Nivel: " + Controlador.getInstance().getNivel());
-		lblSalud.setText("Salud: " + Controlador.getInstance().getsaludRestante() + "%");
-		lblVidas.setText("Vidas: " + Controlador.getInstance().getvidasRestantes());
-		lblPuntos.setText("Puntos: " + Controlador.getInstance().getPuntos());
+		lblNivel.setText("Nivel: " + controlador.getNivel());
+		lblSalud.setText("Salud: " + controlador.getsaludRestante() + "%");
+		lblVidas.setText("Vidas: " + controlador.getvidasRestantes());
+		lblPuntos.setText("Puntos: " + controlador.getPuntos());
 
 		// Actualizar posición del Submarino
-		MovimientoView auxSubmarino = Controlador.getInstance().getSubmarino();
+		MovimientoView auxSubmarino = controlador.getSubmarino();
 		submarino.setBounds(auxSubmarino.getPosicionX(), auxSubmarino.getPosicionY(), auxSubmarino.getAncho(), auxSubmarino.getAlto());
 		
 		//Actualizar posiciones de los Barcos
-		ArrayList<MovimientoView> vistasBarcos = Controlador.getInstance().getBarcos();
+		ArrayList<MovimientoView> vistasBarcos = controlador.getBarcos();
 		gestionarLabelsDinámicos(labelsBarcos, vistasBarcos.size(), Color.GREEN, "Barco");
 		
 		//StringBuilder para los textos info de viajes
@@ -244,7 +246,7 @@ public class VentanaTest extends JFrame {
 		txtInfoViajes.setText(listadoViajes.toString());
 		
 		// Actualizar posiciones de las Cargas
-		ArrayList<MovimientoView> vistasCargas = Controlador.getInstance().getCargas();
+		ArrayList<MovimientoView> vistasCargas = controlador.getCargas();
 		gestionarLabelsDinámicos(labelsCargas, vistasCargas.size(), Color.RED, "Carga");
 		for (int i = 0; i < vistasCargas.size(); i++) {
 			MovimientoView v = vistasCargas.get(i);
@@ -252,7 +254,7 @@ public class VentanaTest extends JFrame {
 		}
 
 		// Registrar nuevas explosiones y avanzar las existentes
-		for (int[] pos : Controlador.getInstance().getExplosiones()) {
+		for (int[] pos : controlador.getExplosiones()) {
 			explosionesActivas.add(new int[]{pos[0], pos[1], DURACION_EXPLOSION});
 		}
 		for (int i = explosionesActivas.size() - 1; i >= 0; i--) {
@@ -270,18 +272,18 @@ public class VentanaTest extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Controlador ejecuta los movimientos automáticos
-			Controlador.getInstance().procesosAutomaticos();
+			controlador.procesosAutomaticos();
 			
 			// Actualiza los gráficos en la pantalla
 			actualizarPantalla();
 			
 			// Ver si se termina el juego
-			if (Controlador.getInstance().getTerminoJuego()) {
+			if (controlador.getTerminoJuego()) {
 				
 				Timer timer = (Timer) e.getSource();
 				timer.stop(); //Parar el game loop
 				
-				int puntosFinales = Controlador.getInstance().getPuntos();
+				int puntosFinales = controlador.getPuntos();
 				String mensaje = "¡FIN DEL JUEGO!\n\nEl submarino ha sido destruido.\nPuntuación Final: " + puntosFinales + " puntos.";
 				
 				// Textos botones
@@ -302,12 +304,12 @@ public class VentanaTest extends JFrame {
 				// if de opciones de cartel
 				if (seleccion == JOptionPane.YES_OPTION) {
 					explosionesActivas.clear();
-					Controlador.getInstance().reiniciarJuego();
+					controlador.reiniciarJuego();
 					timer.start();
 				} else {
 					GestorPuntajes.guardarPuntuacion(puntosFinales);
 					dispose();
-					new VentanaMenu();
+					new VentanaMenu(controlador);
 				}
 			}
 		}

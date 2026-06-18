@@ -6,22 +6,12 @@ import juego.JuegoSubmarino;
 import views.MovimientoView;
 
 public class Controlador {
-	
-	private static Controlador instance;
+
 	private JuegoSubmarino juego;
-	
-	
-	
-	protected Controlador() {
+
+	public Controlador() {
 		super();
 		this.juego = new JuegoSubmarino();
-	}
-
-	//singleton
-	public static Controlador getInstance() {
-		if(instance == null)
-			instance = new Controlador();
-		return instance;
 	}
 	
 	//----------MOVIMINETO SUBMARINO------------------------------------------------------------------------

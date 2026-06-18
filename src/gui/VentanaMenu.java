@@ -23,12 +23,14 @@ public class VentanaMenu extends JFrame {
 
 	private JLabel lblUltimaPuntuacion;
 	private JLabel lblMejorPuntuacion;
+	private Controlador controlador;
 
-	public VentanaMenu() {
+	public VentanaMenu(Controlador controlador) {
+		this.controlador = controlador;
 		configurar();
 		this.setVisible(true);
-		int ancho = Controlador.getInstance().getAnchoArea();
-		int alto = Controlador.getInstance().getAltoArea();
+		int ancho = controlador.getAnchoArea();
+		int alto = controlador.getAltoArea();
 		this.setSize(ancho, alto);
 		this.setTitle("Juego Submarino - Menú Principal");
 		this.setLocationRelativeTo(null);
@@ -117,8 +119,8 @@ public class VentanaMenu extends JFrame {
 	}
 
 	private void iniciarJuego() {
-		Controlador.getInstance().reiniciarJuego();
+		controlador.reiniciarJuego();
 		this.dispose();
-		new VentanaTest();
+		new VentanaTest(controlador);
 	}
 }
