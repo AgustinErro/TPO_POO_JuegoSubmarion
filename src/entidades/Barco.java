@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import auxiliares.Area;
-import interfaces.moviminetoHorizontal;
+import interfaces.movimientoHorizontal;
 import views.MovimientoView;
 
-public class Barco extends EntidadMovible implements moviminetoHorizontal {
+public class Barco extends EntidadMovible implements movimientoHorizontal {
 	
 	private ArrayList<CargaProfundidad> cargasDisparadas;
 	private int viajes;

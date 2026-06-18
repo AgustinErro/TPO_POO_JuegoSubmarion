@@ -85,6 +85,10 @@ public class Controlador {
 		this.juego.reiniciarJuego();
 	}
 	
+	public ArrayList<int[]> getExplosiones() {
+		return this.juego.getExplosionesRecientes();
+	}
+
 	public ArrayList <MovimientoView> getBarcos(){
 		return this.juego.getBarcos();
 	}

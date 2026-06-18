@@ -1,12 +1,12 @@
 package test;
 
-import gui.VentanaTest;
+import gui.VentanaMenu;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		new VentanaTest();
+		new VentanaMenu();
 
 	}
 

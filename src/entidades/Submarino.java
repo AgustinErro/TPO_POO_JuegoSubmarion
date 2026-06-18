@@ -4,9 +4,9 @@ package entidades;
 import java.util.ArrayList;
 
 import auxiliares.Area;
-import interfaces.moviminetoHorizontal;
+import interfaces.movimientoHorizontal;
 
-public class Submarino extends EntidadMovible implements moviminetoHorizontal {
+public class Submarino extends EntidadMovible implements movimientoHorizontal {
 
 	private int vidas;
 	private int salud;

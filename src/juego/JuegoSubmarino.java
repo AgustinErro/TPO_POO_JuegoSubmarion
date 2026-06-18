@@ -11,13 +11,14 @@ public class JuegoSubmarino {
 
 	private int nivel;
 	private ArrayList<Barco> barcos;
-	
+
 	private Submarino submarino;
 	private Area areaJuego;
 	private int puntos;
 	private int vidasExtra;
 	private int velocidadSubmarino = 10;
 	private int velocidadBarco = 5;
+	private ArrayList<int[]> explosionesRecientes = new ArrayList<>();
 	
 
 	
@@ -64,12 +65,13 @@ public class JuegoSubmarino {
 	}
 	
 	public void sincronizarSubmarino() {
-		
+
 		ArrayList<int[]> ce = new ArrayList<int[]>();
-		
+
 		for (int i = 0; i < barcos.size(); i++) {
 			ce.addAll(this.barcos.get(i).hayCargasExplotadas());
 		}
+		explosionesRecientes.addAll(ce);
 		int p = submarino.detectarDaño(ce);
 		puntos += p;
 		if (p>0)
@@ -117,14 +119,21 @@ public class JuegoSubmarino {
 		}
 	}
 	
+	public ArrayList<int[]> getExplosionesRecientes() {
+		ArrayList<int[]> resultado = new ArrayList<>(explosionesRecientes);
+		explosionesRecientes.clear();
+		return resultado;
+	}
+
 	public void reiniciarJuego() {
 		this.barcos.clear();
 		this.nivel = 0;
 		this.pasarNivel();
 		this.puntos = 0;
+		this.explosionesRecientes.clear();
 		submarino.sumarVidas(3);
 		submarino.setPosInicial();
-		
+
 		this.velocidadBarco = 5;
 	}
 		

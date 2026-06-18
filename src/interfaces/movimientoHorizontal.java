@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface moviminetoHorizontal {
+public interface movimientoHorizontal {
 	
 	public int moverDerecha();
 	

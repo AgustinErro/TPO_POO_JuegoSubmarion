@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -19,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import auxiliares.GestorPuntajes;
 import controlador.Controlador;
 import views.MovimientoView;
 
@@ -26,9 +28,12 @@ public class VentanaTest extends JFrame {
 
 	private static final long serialVersionUID = -5360041225007601188L;
 
+	private static final int DURACION_EXPLOSION = 20;
+
 	private JLabel submarino;
 	private ArrayList<JLabel> labelsBarcos;
 	private ArrayList<JLabel> labelsCargas;
+	private ArrayList<int[]> explosionesActivas = new ArrayList<>();
 	private Container contenedor;
 
 	// Nuevos JLabels para mostrar los datos de la partida en tiempo real
@@ -77,6 +82,33 @@ public class VentanaTest extends JFrame {
 				// Arrancamos en 130 (la superficie) y bajamos de a 100 píxeles
 				for (int y = 130; y < getHeight(); y += 100) {
 					g2d.drawLine(0, y, getWidth(), y);
+				}
+
+				// Dibujar explosiones animadas
+				for (int[] exp : explosionesActivas) {
+					float progress = (float)(DURACION_EXPLOSION - exp[2]) / DURACION_EXPLOSION;
+					float alpha = 1.0f - progress;
+
+					// Anillo exterior naranja
+					int r1 = (int)(8 + progress * 32);
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0f, alpha * 0.6f)));
+					g2d.setColor(new Color(255, 120, 0));
+					g2d.fillOval(exp[0] - r1, exp[1] - r1, r1 * 2, r1 * 2);
+
+					// Anillo interior amarillo
+					int r2 = (int)(4 + progress * 18);
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0f, alpha * 0.85f)));
+					g2d.setColor(new Color(255, 220, 0));
+					g2d.fillOval(exp[0] - r2, exp[1] - r2, r2 * 2, r2 * 2);
+
+					// Núcleo blanco
+					int r3 = (int)(2 + progress * 7);
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0f, alpha)));
+					g2d.setColor(Color.WHITE);
+					g2d.fillOval(exp[0] - r3, exp[1] - r3, r3 * 2, r3 * 2);
+
+					// Restaurar composite
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 				}
 			}
 		};
@@ -219,6 +251,16 @@ public class VentanaTest extends JFrame {
 			labelsCargas.get(i).setBounds(v.getPosicionX(), v.getPosicionY(), v.getAncho(), v.getAlto());
 		}
 
+		// Registrar nuevas explosiones y avanzar las existentes
+		for (int[] pos : Controlador.getInstance().getExplosiones()) {
+			explosionesActivas.add(new int[]{pos[0], pos[1], DURACION_EXPLOSION});
+		}
+		for (int i = explosionesActivas.size() - 1; i >= 0; i--) {
+			explosionesActivas.get(i)[2]--;
+			if (explosionesActivas.get(i)[2] <= 0)
+				explosionesActivas.remove(i);
+		}
+
 		// Redibujar el contenedor para procesar cambios
 		contenedor.repaint();
 	}
@@ -242,27 +284,30 @@ public class VentanaTest extends JFrame {
 				int puntosFinales = Controlador.getInstance().getPuntos();
 				String mensaje = "¡FIN DEL JUEGO!\n\nEl submarino ha sido destruido.\nPuntuación Final: " + puntosFinales + " puntos.";
 				
-				// Textos  botones 
-				Object[] opciones = {"Volver a jugar", "Salir"};
-				
-				// Cartel de GAME OVER 
+				// Textos botones
+				Object[] opciones = {"Volver a jugar", "Menú Principal"};
+
+				// Cartel de GAME OVER
 				int seleccion = JOptionPane.showOptionDialog(
-					null,                  // null para centrar en pantalla
-					mensaje,               // El texto
-					"GAME OVER",           // El título
-					JOptionPane.YES_NO_OPTION,      // Tipo de opciones
-					JOptionPane.WARNING_MESSAGE,// Icono
-					null,                  // Sin icono personalizado
-					opciones,              // Nuestros botones
-					opciones[0]            // Botón seleccionado por defecto ("Volver a jugar")*/
+					null,
+					mensaje,
+					"GAME OVER",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE,
+					null,
+					opciones,
+					opciones[0]
 				);
-				
+
 				// if de opciones de cartel
 				if (seleccion == JOptionPane.YES_OPTION) {
-					Controlador.getInstance().reiniciarJuego(); // Reinicia el juego
-					timer.start(); // Vuelve a arrancar el GameLoop
+					explosionesActivas.clear();
+					Controlador.getInstance().reiniciarJuego();
+					timer.start();
 				} else {
-					System.exit(0); //se cierra todo.
+					GestorPuntajes.guardarPuntuacion(puntosFinales);
+					dispose();
+					new VentanaMenu();
 				}
 			}
 		}
