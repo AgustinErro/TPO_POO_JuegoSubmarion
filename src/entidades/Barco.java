@@ -103,9 +103,9 @@ public class Barco extends EntidadMovible implements moviminetoHorizontal {
 		
 		int limite = Math.max(5, 10 - (this.nivel - 1) / 5);
 		if (random.nextInt(1, limite) == 2) {
-			CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego, 10, 10, (Math.divideExact(this.areaEntidad.getAncho(), 2)+ this.posX)  , this.posY, this.velocidad);
+			CargaProfundidad nuevaCarga = new CargaProfundidad(this.areaJuego, 10, 10, (this.areaEntidad.getCentroX()+ this.posX)  , (this.posY+this.areaEntidad.getAlto()-1), this.velocidad);
 			this.cargasDisparadas.add(nuevaCarga);
-			System.out.println("Disparo carga "+ nuevaCarga.getId()+ " desde posicion X = " +(Math.divideExact(this.areaEntidad.getAncho(), 2) + this.posX));
+			System.out.println("Disparo carga "+ nuevaCarga.getId()+ " desde posicion X = " +(this.areaEntidad.getCentroX()+this.posX));
 		}
 	}
 	

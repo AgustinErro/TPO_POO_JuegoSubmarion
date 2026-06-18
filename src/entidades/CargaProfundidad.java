@@ -48,7 +48,7 @@ public class CargaProfundidad extends EntidadMovible{
 	}
 
 
-	protected boolean isExploto() {
+	public boolean isExploto() {
 		return exploto;
 	}
 
